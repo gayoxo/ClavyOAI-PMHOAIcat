@@ -110,7 +110,7 @@ public class OAIPMHCatSaveCollection extends SaveCollection {
 					throw new CompleteImportRuntimeException("DDBB Name errors, can not accept this name, please use only compatible characters");
 			
 			boolean existe=MySQLConnectionOAIPMHCat.CheckDBS(DateEntrada.get(0),Database,Integer.parseInt(DateEntrada.get(2)),DateEntrada.get(3),DateEntrada.get(4));
-			Create=Boolean.parseBoolean(DateEntrada.get(6));
+			Create=Boolean.parseBoolean(DateEntrada.get(5));
 
 			if (!existe&&!Create)
 				throw new CompleteImportRuntimeException("DDBB not exist and you do not select \"Create if not exist\" checkbox");

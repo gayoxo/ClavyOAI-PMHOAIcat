@@ -96,6 +96,7 @@ public class SaveProcessMainOAIPMHCat {
 		StringBuffer SBsubject=new StringBuffer();
 		StringBuffer SBcoverage=new StringBuffer();
 		StringBuffer SBrights=new StringBuffer();
+		StringBuffer SBdatecreated=new StringBuffer();
 		
 		
 		SBdescription.append(separatorClean(documentInspect.getDescriptionText()));
@@ -108,7 +109,7 @@ public class SaveProcessMainOAIPMHCat {
 			{
 			ArrayList<String> ListaDC = Tabla_DC.get(elementInspect.getHastype());
 			String Valor = separatorClean(((CompleteTextElement) elementInspect).getValue());
-			if (Valor.trim()!=null)
+			if (Valor.trim()!=null&&ListaDC!=null)
 			{
 			for (String string : ListaDC) {
 				
@@ -193,6 +194,11 @@ public class SaveProcessMainOAIPMHCat {
 					SBrights.append(Valor);
 					break;
 
+				case "dc:datecreated":
+					if (SBdatecreated.length()>0)
+						SBdatecreated.append(separator);
+					SBdatecreated.append(Valor);
+					break;
 				default:
 					break;
 				}
@@ -217,35 +223,38 @@ public class SaveProcessMainOAIPMHCat {
 		String subject=null;
 		String coverage=null;
 		String rights=null;
+		String datecreated=null;
 		
 		if (!SBtitle.toString().trim().isEmpty())
-			title=SBtitle.toString();
+			title="'"+SBtitle.toString()+"'";
 		if (!SBcreator.toString().trim().isEmpty())
-			creator=SBcreator.toString();
+			creator="'"+SBcreator.toString()+"'";
 		if (!SBcontributor.toString().trim().isEmpty())
-			contributor=SBcontributor.toString();
+			contributor="'"+SBcontributor.toString()+"'";
 		if (!SBdate.toString().trim().isEmpty())
-			date=SBdate.toString();
+			date="'"+SBdate.toString()+"'";
 		if (!SBlanguage.toString().trim().isEmpty())
-			language=SBlanguage.toString();
+			language="'"+SBlanguage.toString()+"'";
 		if (!SBpublisher.toString().trim().isEmpty())
-			publisher=SBpublisher.toString();
+			publisher="'"+SBpublisher.toString()+"'";
 		if (!SBrelation.toString().trim().isEmpty())
-			relation=SBrelation.toString();	
+			relation="'"+SBrelation.toString()+"'";	
 		if (!SBformat.toString().trim().isEmpty())
-			format=SBformat.toString();	
+			format="'"+SBformat.toString()+"'";	
 		if (!SBtype.toString().trim().isEmpty())
-			type=SBtype.toString();		
+			type="'"+SBtype.toString()+"'";		
 		if (!SBdescription.toString().trim().isEmpty())
-			description=SBdescription.toString();	
+			description="'"+SBdescription.toString()+"'";	
 		if (!SBidentifier.toString().trim().isEmpty())
-			identifier=SBidentifier.toString();
+			identifier="'"+SBidentifier.toString()+"'";
 		if (!SBsource.toString().trim().isEmpty())
-			source=SBsource.toString();
+			source="'"+SBsource.toString()+"'";
 		if (!SBcoverage.toString().trim().isEmpty())
-			coverage=SBcoverage.toString();
+			coverage="'"+SBcoverage.toString()+"'";
 		if (!SBrights.toString().trim().isEmpty())
-			rights=SBrights.toString();
+			rights="'"+SBrights.toString()+"'";
+		if (!SBdatecreated.toString().trim().isEmpty())
+			datecreated="'"+SBdatecreated.toString()+"'";
 		
 		try {
 			MySQLConnectionOAIPMHCat.RunQuerryINSERT("INSERT INTO `metadata_record` (" +
@@ -253,38 +262,39 @@ public class SaveProcessMainOAIPMHCat {
 					 "`timestamp`," +
 					 "`title`," +
 					 "`creator`," +
+					 "`contributor`," +
 					 "`date`," +
 					  "`language`," +
 					  "`publisher`," +
 					  "`relation`," +
 					  "`format`," +
-					  "`description`," +
 					  "`type`," +
-					  "`source`," +
+					  "`description`," +
 					  "`identifier`," +
+					  "`source`," +
 					  "`subject`," +
-					  "`contributor`," +
 					  "`datecreated`," +
 					  "`coverage`," +
 					  "`rights`" +
 					") VALUES (" +
-					"'"+LocalIdentificador+"',"+
+					LocalIdentificador+","+
 					"'2003-01-01 00:00:00',"+
-					"'"+title+"',"+
-					"'"+ creator+"',"+
-					"'"+ contributor+"',"+
-					"'"+ date+"',"+
-					"'"+ language+"',"+
-					"'"+ publisher+"',"+
-						"'"+ relation+"',"+
-						"'"+ format+"',"+
-						"'"+ type+"',"+
-						"'"+ description+"',"+
-						"'"+ identifier+"',"+
-						"'"+ source+"',"+
-						"'"+ subject+"',"+
-						"'"+ coverage+"',"+
-						"'"+ rights+"'"+
+					title+","+
+					creator+","+
+					contributor+","+
+					date+","+
+					language+","+
+					publisher+","+
+					relation+","+
+					format+","+
+					type+","+
+					description+","+
+					identifier+","+
+					source+","+
+					subject+","+
+					datecreated+","+
+					coverage+","+
+					rights+
 					");");
 		} catch (Exception e) {
 			e.printStackTrace();
