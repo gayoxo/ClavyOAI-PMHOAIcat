@@ -1,4 +1,4 @@
-package fdi.ucm.server.exportparser.oda2;
+package fdi.ucm.server.exportparser.oaipmhcat;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,11 +13,11 @@ import fdi.ucm.server.modelComplete.CompleteImportRuntimeException;
  * @author Joaquin Gayoso-Cabada
  *
  */
-public class MySQLConnectionOdA2 {
+public class MySQLConnectionOAIPMHCat {
 	
 
 	
-	private static MySQLConnectionOdA2 instance;
+	private static MySQLConnectionOAIPMHCat instance;
 	private Connection conexion;
 
 	
@@ -31,7 +31,7 @@ public class MySQLConnectionOdA2 {
 	private static boolean DataBaseCreada;
 	
 
-	public MySQLConnectionOdA2(String dbNameIP,String database,int Port, String user, String password) {
+	public MySQLConnectionOAIPMHCat(String dbNameIP,String database,int Port, String user, String password) {
 		try {
 			Class.forName(DriverDatabase);
 			InicializacionAnonima(dbNameIP,database,Port,user,password); 
@@ -44,7 +44,7 @@ public class MySQLConnectionOdA2 {
 		}  
 	}
 	
-	public MySQLConnectionOdA2(String database,String user, String password) {
+	public MySQLConnectionOAIPMHCat(String database,String user, String password) {
 		
 			try {
 				Class.forName(DriverDatabase);
@@ -126,13 +126,13 @@ public class MySQLConnectionOdA2 {
         
 	}
 	
-	public static MySQLConnectionOdA2 getInstance(String dbNameIP,String database,int port, String user, String password) {
-			instance=new MySQLConnectionOdA2(dbNameIP,database,port,user,password);
+	public static MySQLConnectionOAIPMHCat getInstance(String dbNameIP,String database,int port, String user, String password) {
+			instance=new MySQLConnectionOAIPMHCat(dbNameIP,database,port,user,password);
 		return instance;	
 	}
 	
-	public static MySQLConnectionOdA2 getInstance(String database,String user, String password) {
-		instance=new MySQLConnectionOdA2(database,user,password);
+	public static MySQLConnectionOAIPMHCat getInstance(String database,String user, String password) {
+		instance=new MySQLConnectionOAIPMHCat(database,user,password);
 	return instance;	
 }
 	
@@ -231,43 +231,6 @@ public class MySQLConnectionOdA2 {
 	    return false;
 	}
 	
-	/**
-	 * Chequea que la base de datos existe en el servidor
-	 * @param dbNameIP
-	 * @param database
-	 * @param port
-	 * @param user
-	 * @param password
-	 * @return
-	 * @throws Exception 
-	 */
-	public static Boolean CheckDBS(String database,String user, String password) {
-	    try{
-	        Class.forName(DriverDatabase); 
-	        String DBaseServerUnknow = "jdbc:mysql://a-note.fdi.ucm.es:3306/";
-	        Connection conn = DriverManager.getConnection(DBaseServerUnknow, user, password); 
-
-	        ResultSet resultSet = conn.getMetaData().getCatalogs();
-
-	        while (resultSet.next()) {
-
-	          String databaseName = resultSet.getString(1);
-	            if(databaseName.equals(database)){
-	                return true;
-	            }
-	        }
-	        resultSet.close();
-
-	    }
-	    catch(Exception e){
-	        e.printStackTrace();
-	        e.getCause().printStackTrace();
-	        throw new RuntimeException();
-	        
-	    }
-
-	    return false;
-	}
 
 	/**
 	 * @return the dataBaseCreada
