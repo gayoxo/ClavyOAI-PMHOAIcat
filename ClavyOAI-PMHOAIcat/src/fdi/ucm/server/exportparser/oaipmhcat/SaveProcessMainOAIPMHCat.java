@@ -2,7 +2,11 @@ package fdi.ucm.server.exportparser.oaipmhcat;
 
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import fdi.ucm.server.modelComplete.CompleteImportRuntimeException;
@@ -256,6 +260,13 @@ public class SaveProcessMainOAIPMHCat {
 		if (!SBdatecreated.toString().trim().isEmpty())
 			datecreated="'"+SBdatecreated.toString()+"'";
 		
+		
+		Calendar Start = new GregorianCalendar();
+		Date dateCal = Start.getTime();
+		SimpleDateFormat format1 = new SimpleDateFormat(
+				"yyyy-MM-dd");
+		String date1 = format1.format(dateCal);
+		
 		try {
 			MySQLConnectionOAIPMHCat.RunQuerryINSERT("INSERT INTO `metadata_record` (" +
 					"`local_identifier`," +
@@ -278,7 +289,7 @@ public class SaveProcessMainOAIPMHCat {
 					  "`rights`" +
 					") VALUES (" +
 					LocalIdentificador+","+
-					"'2003-01-01 00:00:00',"+
+					"'"+date1+"',"+
 					title+","+
 					creator+","+
 					contributor+","+
@@ -1520,6 +1531,15 @@ public class SaveProcessMainOAIPMHCat {
 				"`local_identifier` varchar(50) NOT NULL,"+
 				 "`set_spec` varchar(50) NOT NULL,"+
 				  "PRIMARY KEY (`local_identifier`,`set_spec`)"+
+				") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+		
+		
+		MySQLConnectionOAIPMHCat.RunQuerry("DROP TABLE IF EXISTS `set_list`;");
+		MySQLConnectionOAIPMHCat.RunQuerry("CREATE TABLE `set_list` ("+
+				"`set_spec` varchar(50) NOT NULL,"+
+				"`set_name` varchar(50) DEFAULT NULL,"+
+				"`set_description` varchar(50) DEFAULT NULL,"+
+				"PRIMARY KEY (`set_spec`)"+
 				") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
 
