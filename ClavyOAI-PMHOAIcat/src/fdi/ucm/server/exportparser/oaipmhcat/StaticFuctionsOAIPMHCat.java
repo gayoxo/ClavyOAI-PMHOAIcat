@@ -4,7 +4,9 @@
 package fdi.ucm.server.exportparser.oaipmhcat;
 
 import java.util.ArrayList;
+
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteElementType;
+import fdi.ucm.server.modelComplete.collection.grammar.CompleteGrammar;
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteOperationalValueType;
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteOperationalView;
 
@@ -819,6 +821,34 @@ public class StaticFuctionsOAIPMHCat {
 		}
 		
 		return Salida;
+	}
+
+	public static boolean isIgnored(CompleteGrammar hastype) {
+
+		ArrayList<CompleteOperationalView> Shows = hastype.getViews();
+		for (CompleteOperationalView show : Shows) {
+			
+			if (show.getName().equals(StaticNamesOAIPMHCat.OAIPMH))
+			{
+				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
+				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) {
+					if (CompleteOperationalValueType.getName().equals(StaticNamesOAIPMHCat.IGNORE))
+						if (!CompleteOperationalValueType.getDefault().trim().isEmpty())
+							{
+							boolean Salida=false;
+							try {
+								Salida=Boolean.parseBoolean(CompleteOperationalValueType.getDefault());
+							} catch (Exception e) {
+							}
+							
+							return Salida;
+							}
+
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 }

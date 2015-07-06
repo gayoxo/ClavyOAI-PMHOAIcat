@@ -11,4 +11,6 @@ public class StaticNamesOAIPMHCat {
 	
 		public static final String OAIPMH = "OAIPMH";
 		public static final String TYPE = "Type";
+		
+		public static final String IGNORE = "Ignore";
 }
