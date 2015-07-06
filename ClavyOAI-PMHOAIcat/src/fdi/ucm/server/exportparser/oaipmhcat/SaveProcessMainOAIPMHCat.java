@@ -112,7 +112,7 @@ public class SaveProcessMainOAIPMHCat {
 			
 			if (elementInspect instanceof CompleteTextElement)
 			{
-			ArrayList<String> ListaDC = Tabla_DC.get(elementInspect.getHastype());
+			ArrayList<String> ListaDC = Tabla_DC.get(elementInspect.getHastype().getClavilenoid());
 			String Valor = separatorClean(((CompleteTextElement) elementInspect).getValue());
 			if (Valor.trim()!=null&&ListaDC!=null)
 			{
@@ -324,7 +324,8 @@ public class SaveProcessMainOAIPMHCat {
 
 	private void findTablaDC() {
 		for (CompleteGrammar gramarInspect : toOda.getMetamodelGrammar()) {
-			findTablaDC(gramarInspect.getSons());
+			if (!StaticFuctionsOAIPMHCat.isIgnored(gramarInspect))
+				findTablaDC(gramarInspect.getSons());
 		}
 		
 	}
