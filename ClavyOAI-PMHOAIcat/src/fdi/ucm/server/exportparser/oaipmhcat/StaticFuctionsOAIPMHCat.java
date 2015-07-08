@@ -808,11 +808,11 @@ public class StaticFuctionsOAIPMHCat {
 		ArrayList<CompleteOperationalView> Shows = hastype.getShows();
 		for (CompleteOperationalView show : Shows) {
 			
-			if (show.getName().equals(StaticNamesOAIPMHCat.OAIPMH))
+			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
 			{
 				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
 				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) {
-					if (CompleteOperationalValueType.getName().equals(StaticNamesOAIPMHCat.TYPE))
+					if (CompleteOperationalValueType.getName().toLowerCase().equals(StaticNamesOAIPMHCat.TYPE.toLowerCase()))
 						if (!CompleteOperationalValueType.getDefault().trim().isEmpty())
 							Salida.add(CompleteOperationalValueType.getDefault());
 
@@ -828,11 +828,11 @@ public class StaticFuctionsOAIPMHCat {
 		ArrayList<CompleteOperationalView> Shows = hastype.getViews();
 		for (CompleteOperationalView show : Shows) {
 			
-			if (show.getName().equals(StaticNamesOAIPMHCat.OAIPMH))
+			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
 			{
 				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
 				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) {
-					if (CompleteOperationalValueType.getName().equals(StaticNamesOAIPMHCat.IGNORE))
+					if (CompleteOperationalValueType.getName().toLowerCase().equals(StaticNamesOAIPMHCat.IGNORE.toLowerCase()))
 						if (!CompleteOperationalValueType.getDefault().trim().isEmpty())
 							{
 							boolean Salida=false;
