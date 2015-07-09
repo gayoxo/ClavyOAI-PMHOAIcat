@@ -74,7 +74,7 @@ public class SaveProcessMainOAIPMHCat {
 
 	private void processOV() {
 		for (CompleteDocuments documentInspect : toOda.getEstructuras()) {
-			if (!StaticFuctionsOAIPMHCat.isIgnored(documentInspect.getDocument()))
+			if (!StaticFuctionsOAIPMHCat.isIgnored(documentInspect))
 				processDocument(documentInspect);
 		}
 		
@@ -140,9 +140,16 @@ public class SaveProcessMainOAIPMHCat {
 					SBdate.append(Valor);
 					break;
 				case "dc:language":
-					if (SBlanguage.length()>0)
-						SBlanguage.append(separator);
-					SBlanguage.append(Valor);
+					
+					
+					String[] SS=Valor.split("[,|;|:|.]");
+					for (String string2 : SS) {
+						if (SBlanguage.length()>0)
+							SBlanguage.append(separator);	
+						SBlanguage.append(string2);
+					}
+					
+					
 					break;
 				case "dc:publisher":
 					if (SBpublisher.length()>0)
@@ -155,14 +162,24 @@ public class SaveProcessMainOAIPMHCat {
 					SBrelation.append(Valor);
 					break;
 				case "dc:format":
+					
+					String[] SS3=Valor.split("[,|;|:|.]");
+					for (String string2 : SS3) {
 					if (SBformat.length()>0)
 						SBformat.append(separator);
-					SBformat.append(Valor);
+					SBformat.append(string2);
+					}
+					
 					break;
 				case "dc:type":
+					
+					String[] SS2=Valor.split("[,|;|:|.]");
+					for (String string2 : SS2) {
 					if (SBtype.length()>0)
 						SBtype.append(separator);
-					SBtype.append(Valor);
+					SBtype.append(string2);
+					}
+					
 					break;
 				case "dc:description":
 					if (SBdescription.length()>0)
