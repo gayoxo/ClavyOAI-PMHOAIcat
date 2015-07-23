@@ -4,6 +4,7 @@
 package fdi.ucm.server.exportparser.oaipmhcatmods;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fdi.ucm.server.modelComplete.collection.document.CompleteDocuments;
 import fdi.ucm.server.modelComplete.collection.document.CompleteOperationalValue;
@@ -107,7 +108,7 @@ ArrayList<String> Salida=new ArrayList<String>();
 		ArrayList<CompleteOperationalView> Shows = hastype.getShows();
 		for (CompleteOperationalView show : Shows) {
 			
-			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
+			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.MODS.toLowerCase()))
 			{
 				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
 				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) {
@@ -116,6 +117,24 @@ ArrayList<String> Salida=new ArrayList<String>();
 							Salida.add(CompleteOperationalValueType.getDefault());
 
 				}
+			}
+		}
+		
+		return Salida;
+	}
+	
+	public static HashMap<String,String> getCategoriasOAIPMHMODSValues(
+			CompleteElementType hastype) {
+		HashMap<String,String> Salida=new HashMap<String,String>();
+		
+		ArrayList<CompleteOperationalView> Shows = hastype.getShows();
+		for (CompleteOperationalView show : Shows) {
+			
+			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.MODSVALUE.toLowerCase()))
+			{
+				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
+				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) 
+					Salida.put(CompleteOperationalValueType.getName().toLowerCase(), CompleteOperationalValueType.getDefault());
 			}
 		}
 		

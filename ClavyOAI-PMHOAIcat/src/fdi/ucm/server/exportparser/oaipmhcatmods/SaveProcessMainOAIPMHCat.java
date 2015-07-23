@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
+
 import fdi.ucm.server.modelComplete.CompleteImportRuntimeException;
 import fdi.ucm.server.modelComplete.collection.CompleteCollection;
 import fdi.ucm.server.modelComplete.collection.CompleteLogAndUpdates;
@@ -40,6 +42,7 @@ public class SaveProcessMainOAIPMHCat {
 	protected CompleteTextElementType IDOV;
 	private HashMap<Long, ArrayList<String>> Tabla_DC;
 	private HashMap<Long, ArrayList<String>> Tabla_MODS;
+	private HashMap<Long, HashMap<String, String>> Tabla_MODSValue;
 	private static final char separator='~';
 	private static final char separator_comodin='¬';
 			
@@ -66,6 +69,7 @@ public class SaveProcessMainOAIPMHCat {
 		
 		Tabla_DC=new HashMap<Long, ArrayList<String>>();
 		Tabla_MODS=new HashMap<Long, ArrayList<String>>();
+		Tabla_MODSValue=new HashMap<Long, HashMap<String,String>>();
 		
 		findTablaDC();
 		findTablaMODS();
@@ -90,8 +94,10 @@ public class SaveProcessMainOAIPMHCat {
 		for (CompleteStructure struictureInspect : listaHijos) {
 			if (struictureInspect instanceof CompleteElementType)
 			{
-				ArrayList<String> OAI_Category=StaticFuctionsOAIPMHCat.getCategoriasOAIPMHMODS((CompleteElementType)struictureInspect);			
+				ArrayList<String> OAI_Category=StaticFuctionsOAIPMHCat.getCategoriasOAIPMHMODS((CompleteElementType)struictureInspect);		
+				HashMap<String,String> OAI_Category_Value=StaticFuctionsOAIPMHCat.getCategoriasOAIPMHMODSValues((CompleteElementType)struictureInspect);
 				Tabla_MODS.put(struictureInspect.getClavilenoid(), OAI_Category);
+				Tabla_MODSValue.put(struictureInspect.getClavilenoid(), OAI_Category_Value);
 			}
 			
 			findTablaMODS(struictureInspect.getSons());
@@ -290,7 +296,177 @@ public class SaveProcessMainOAIPMHCat {
 					break;
 				}
 				
+			}	
 			}
+			ArrayList<String> ListaMODS = Tabla_MODS.get(elementInspect.getHastype().getClavilenoid());
+			HashMap<String, String> ListaMODSVALUES = Tabla_MODSValue.get(elementInspect.getHastype().getClavilenoid());
+			if (Valor!=null&&!Valor.trim().isEmpty()&&ListaMODS!=null)
+			{
+			for (String string : ListaMODS) {
+				
+				switch (string.toLowerCase()) {
+				case "title":
+				case "subtitle":
+				case "partnumber":
+				case "partname":
+				case "nonsort":
+					if (SBmodstitleInfo.length()>0)
+						SBmodstitleInfo.append(separator);
+					SBmodstitleInfo.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					break;
+				case "namepart":
+				case "displayform":
+				case "affiliation":
+				case "role":
+				case "description":
+				case "etal":
+					if (SBmodsname.length()>0)
+						SBmodsname.append(separator);
+					SBmodsname.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					break;
+				case "typeofresource":
+					if (SBmodstypeofresource.length()>0)
+						SBmodstypeofresource.append(separator);
+					SBmodstypeofresource.append(Valor);
+					break;
+				case "genrealone":
+					if (SBmodsgenre.length()>0)
+						SBmodsgenre.append(separator);
+					SBmodsgenre.append(Valor);
+					break;
+				case "place":
+				case "publisher":
+				case "dateissued":
+				case "datecreated":
+				case "datecaptured":
+				case "datevalid":
+				case "datemodified":
+				case "copyrightdate":
+				case "dateother":
+				case "edition":
+				case "issuance":
+				case "frequency":
+					if (SBmodsorigininfo.length()>0)
+						SBmodsorigininfo.append(separator);
+					SBmodsorigininfo.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					break;
+				case "languageterm":
+				case "scriptterm":
+					String[] SS3=Valor.split("[,|;|:|.]");
+					for (String string2 : SS3) {
+						if (!string2.trim().isEmpty())
+						{
+						
+					if (SBmodslanguage.length()>0)
+						SBmodslanguage.append(separator);
+					SBmodslanguage.append(setValue(string2,string.toLowerCase(),ListaMODSVALUES));
+						}
+					}
+					break;
+				case "form":
+				case "reformattingquality":
+				case "internetmediatype":
+				case "extent":
+				case "digitalorigin":
+				case "note":
+					if (SBmodsphysicaldescription.length()>0)
+						SBmodsphysicaldescription.append(separator);
+					SBmodsphysicaldescription.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					break;
+				case "tableofcontents":
+					if (SBmodstableofcontents.length()>0)
+						SBmodstableofcontents.append(separator);
+					SBmodstableofcontents.append(Valor);
+					break;
+				case "targetaudience":
+					if (SBmodstargetaudience.length()>0)
+						SBmodstargetaudience.append(separator);
+					SBmodstargetaudience.append(Valor);
+					break;
+				case "notealone":
+					if (SBmodsnote.length()>0)
+						SBmodsnote.append(separator);
+					SBmodsnote.append(Valor);
+					break;
+				case "topic":
+				case "geographic":
+				case "temporal":
+				case "titleinfo":
+				case "name":
+				case "genre":
+				case "hierarchicalgeographic":
+				case "cartographics":
+				case "geographiccode":
+				case "occupation":
+					if (SBmodssubject.length()>0)
+						SBmodssubject.append(separator);
+					SBmodssubject.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					break;
+				case "classification":
+					if (SBmodsclassification.length()>0)
+						SBmodsclassification.append(separator);
+					SBmodsclassification.append(Valor);
+					break;
+				case "relateditem":
+					if (SBmodsrelateditem.length()>0)
+						SBmodsrelateditem.append(separator);
+					SBmodsrelateditem.append(Valor);
+					break;
+				case "identifier":
+					if (SBmodsidentifier.length()>0)
+						SBmodsidentifier.append(separator);
+					SBmodsidentifier.append(Valor);
+					break;
+				case "physicallocation":
+				case "shelflocator":
+				case "url":
+				case "holdingsimple":
+				case "holdingexternal":
+					if (SBmodslocation.length()>0)
+						SBmodslocation.append(separator);
+					SBmodslocation.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					break;
+
+				case "accesscondition":
+					if (SBmodsaccesscondition.length()>0)
+						SBmodsaccesscondition.append(separator);
+					SBmodsaccesscondition.append(Valor);
+					break;
+				case "detail":
+				case "date":
+				case "text":
+					if (SBmodspart.length()>0)
+						SBmodspart.append(separator);
+					SBmodspart.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					break;
+				case "extentpart":	
+					if (SBmodspart.length()>0)
+						SBmodspart.append(separator);
+					SBmodspart.append(setValue(Valor,"extent",ListaMODSVALUES));
+					break;
+				case "extension":
+					if (SBmodsextension.length()>0)
+						SBmodsextension.append(separator);
+					SBmodsextension.append(Valor);
+					break;	
+				
+				case "recordcontentsource":
+				case "recordcreationdate":
+				case "recordchangedate":
+				case "recordidentifier":
+				case "recordorigin":
+				case "languageofcataloging":
+				case "descriptionstandard":
+					if (SBmodsrecordinfo.length()>0)
+						SBmodsrecordinfo.append(separator);
+					SBmodsrecordinfo.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					break;
+					
+				default:
+					break;
+				}
+				
+			}	
 			}
 		}
 		}
@@ -311,6 +487,27 @@ public class SaveProcessMainOAIPMHCat {
 		String coverage=null;
 		String rights=null;
 		String datecreated=null;
+		
+		String modstitleInfo=null;
+		String modsname=null;
+		String modstypeofresource=null;
+		String modsgenre=null;
+		String modsorigininfo=null;
+		String modslanguage=null;
+		String modsphysicaldescription=null;
+		String modstableofcontents=null;
+		String modstargetaudience=null;
+		String modsnote=null;
+		String modssubject=null;
+		String modsclassification=null;
+		String modsrelateditem=null;
+		String modsidentifier=null;
+		String modslocation=null;
+		String modsaccesscondition=null;
+		String modspart=null;
+		String modsextension=null;
+		String modsrecordinfo=null;
+		
 		
 		if (!SBtitle.toString().trim().isEmpty())
 			title="'"+SBtitle.toString()+"'";
@@ -432,6 +629,19 @@ public class SaveProcessMainOAIPMHCat {
 			e.printStackTrace();
 			ColectionLog.getLogLines().add("Error in insert element ClavyId=" + documentInspect.getClavilenoid()+" in database" );
 		}
+	}
+
+
+
+	private String setValue(String valor, String string,
+			HashMap<String, String> listaMODSVALUES) {
+		StringBuffer Salida=new StringBuffer();
+		Salida.append("<").append(valor);
+		for (Entry<String, String> elem : listaMODSVALUES.entrySet()) {
+			Salida.append(" ").append(elem.getKey()).append("=\"").append(elem.getValue()).append("\"");
+		}
+		Salida.append(">");
+		return Salida.toString();
 	}
 
 

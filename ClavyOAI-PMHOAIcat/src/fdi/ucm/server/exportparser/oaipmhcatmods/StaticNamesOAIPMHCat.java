@@ -13,4 +13,8 @@ public class StaticNamesOAIPMHCat {
 		public static final String TYPE = "Type";
 		
 		public static final String IGNORE = "Ignore";
+		
+		public static final String MODS = "MODS";
+		public static final String MODSVALUE = "MODSVALUE";
+		
 }
