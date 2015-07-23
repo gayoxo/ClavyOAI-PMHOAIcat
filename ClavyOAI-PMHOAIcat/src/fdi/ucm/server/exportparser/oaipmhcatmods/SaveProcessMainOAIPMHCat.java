@@ -5,6 +5,7 @@ package fdi.ucm.server.exportparser.oaipmhcatmods;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -41,7 +42,6 @@ public class SaveProcessMainOAIPMHCat {
 	protected CompleteLogAndUpdates ColectionLog;
 	protected CompleteTextElementType IDOV;
 	private HashMap<Long, ArrayList<String>> Tabla_DC;
-	private HashMap<Long, ArrayList<String>> Tabla_MODS;
 	private HashMap<Long, HashMap<String, String>> Tabla_MODSValue;
 	private static final char separator='~';
 	private static final char separator_comodin='¬';
@@ -68,7 +68,6 @@ public class SaveProcessMainOAIPMHCat {
 
 		
 		Tabla_DC=new HashMap<Long, ArrayList<String>>();
-		Tabla_MODS=new HashMap<Long, ArrayList<String>>();
 		Tabla_MODSValue=new HashMap<Long, HashMap<String,String>>();
 		
 		findTablaDC();
@@ -94,9 +93,7 @@ public class SaveProcessMainOAIPMHCat {
 		for (CompleteStructure struictureInspect : listaHijos) {
 			if (struictureInspect instanceof CompleteElementType)
 			{
-				ArrayList<String> OAI_Category=StaticFuctionsOAIPMHCat.getCategoriasOAIPMHMODS((CompleteElementType)struictureInspect);		
 				HashMap<String,String> OAI_Category_Value=StaticFuctionsOAIPMHCat.getCategoriasOAIPMHMODSValues((CompleteElementType)struictureInspect);
-				Tabla_MODS.put(struictureInspect.getClavilenoid(), OAI_Category);
 				Tabla_MODSValue.put(struictureInspect.getClavilenoid(), OAI_Category_Value);
 			}
 			
@@ -149,6 +146,7 @@ public class SaveProcessMainOAIPMHCat {
 		StringBuffer SBmodsorigininfo=new StringBuffer();
 		StringBuffer SBmodslanguage=new StringBuffer();
 		StringBuffer SBmodsphysicaldescription=new StringBuffer();
+		StringBuffer SBmodsabstract=new StringBuffer();
 		StringBuffer SBmodstableofcontents=new StringBuffer();
 		StringBuffer SBmodstargetaudience=new StringBuffer();
 		StringBuffer SBmodsnote=new StringBuffer();
@@ -164,6 +162,8 @@ public class SaveProcessMainOAIPMHCat {
 		
 		
 		SBdescription.append(separatorClean(documentInspect.getDescriptionText()));
+		SBmodsabstract.append(setValue(separatorClean(documentInspect.getDescriptionText()),"<abstract>"));
+		
 		LocalIdentificador=Long.toString(documentInspect.getClavilenoid());
 		
 		
@@ -298,60 +298,61 @@ public class SaveProcessMainOAIPMHCat {
 				
 			}	
 			}
-			ArrayList<String> ListaMODS = Tabla_MODS.get(elementInspect.getHastype().getClavilenoid());
 			HashMap<String, String> ListaMODSVALUES = Tabla_MODSValue.get(elementInspect.getHastype().getClavilenoid());
-			if (Valor!=null&&!Valor.trim().isEmpty()&&ListaMODS!=null)
+			if (Valor!=null&&!Valor.trim().isEmpty()&&ListaMODSVALUES!=null)
 			{
-			for (String string : ListaMODS) {
+			for (Entry<String, String> Enstring : ListaMODSVALUES.entrySet()) {
+				
+				String string=Enstring.getKey();
 				
 				switch (string.toLowerCase()) {
-				case "title":
-				case "subtitle":
-				case "partnumber":
-				case "partname":
-				case "nonsort":
+				case "<titleinfo><title>":
+				case "<titleinfo><subtitle>":
+				case "<titleinfo><partnumber>":
+				case "<titleinfo><partname>":
+				case "<titleinfo><nonsort>":
 					if (SBmodstitleInfo.length()>0)
 						SBmodstitleInfo.append(separator);
-					SBmodstitleInfo.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					SBmodstitleInfo.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "namepart":
-				case "displayform":
-				case "affiliation":
-				case "role":
-				case "description":
-				case "etal":
+				case "<name><namepart>":
+				case "<name><displayform>":
+				case "<name><affiliation>":
+				case "<name><role>":
+				case "<name><description>":
+				case "<name><etal>":
 					if (SBmodsname.length()>0)
 						SBmodsname.append(separator);
-					SBmodsname.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					SBmodsname.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "typeofresource":
+				case "<typeofresource>":
 					if (SBmodstypeofresource.length()>0)
 						SBmodstypeofresource.append(separator);
-					SBmodstypeofresource.append(Valor);
+					SBmodstypeofresource.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "genrealone":
+				case "<genre>":
 					if (SBmodsgenre.length()>0)
 						SBmodsgenre.append(separator);
-					SBmodsgenre.append(Valor);
+					SBmodsgenre.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "place":
-				case "publisher":
-				case "dateissued":
-				case "datecreated":
-				case "datecaptured":
-				case "datevalid":
-				case "datemodified":
-				case "copyrightdate":
-				case "dateother":
-				case "edition":
-				case "issuance":
-				case "frequency":
+				case "<origininfo><place>":
+				case "<origininfo><publisher>":
+				case "<origininfo><dateissued>":
+				case "<origininfo><datecreated>":
+				case "<origininfo><datecaptured>":
+				case "<origininfo><datevalid>":
+				case "<origininfo><datemodified>":
+				case "<origininfo><copyrightdate>":
+				case "<origininfo><dateother>":
+				case "<origininfo><edition>":
+				case "<origininfo><issuance>":
+				case "<origininfo><frequency>":
 					if (SBmodsorigininfo.length()>0)
 						SBmodsorigininfo.append(separator);
-					SBmodsorigininfo.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					SBmodsorigininfo.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "languageterm":
-				case "scriptterm":
+				case "<language><languageterm>":
+				case "<language><scriptterm>":
 					String[] SS3=Valor.split("[,|;|:|.]");
 					for (String string2 : SS3) {
 						if (!string2.trim().isEmpty())
@@ -359,107 +360,112 @@ public class SaveProcessMainOAIPMHCat {
 						
 					if (SBmodslanguage.length()>0)
 						SBmodslanguage.append(separator);
-					SBmodslanguage.append(setValue(string2,string.toLowerCase(),ListaMODSVALUES));
+					SBmodslanguage.append(setValue(Valor,Enstring.getValue()));
 						}
 					}
 					break;
-				case "form":
-				case "reformattingquality":
-				case "internetmediatype":
-				case "extent":
-				case "digitalorigin":
-				case "note":
+				case "<physicaldescription><form>":
+				case "<physicaldescription><reformattingquality>":
+				case "<physicaldescription><internetmediatype>":
+				case "<physicaldescription><extent>":
+				case "<physicaldescription><digitalorigin>":
+				case "<physicaldescription><note>":
 					if (SBmodsphysicaldescription.length()>0)
 						SBmodsphysicaldescription.append(separator);
-					SBmodsphysicaldescription.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					SBmodsphysicaldescription.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "tableofcontents":
+				case "<abstract>":
+					if (SBmodsabstract.length()>0)
+						SBmodsabstract.append(separator);
+					SBmodsabstract.append(setValue(Valor,Enstring.getValue()));
+					break;
+				case "<tableofcontents>":
 					if (SBmodstableofcontents.length()>0)
 						SBmodstableofcontents.append(separator);
-					SBmodstableofcontents.append(Valor);
+					SBmodstableofcontents.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "targetaudience":
+				case "<targetaudience>":
 					if (SBmodstargetaudience.length()>0)
 						SBmodstargetaudience.append(separator);
-					SBmodstargetaudience.append(Valor);
+					SBmodstargetaudience.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "notealone":
+				case "<note>":
 					if (SBmodsnote.length()>0)
 						SBmodsnote.append(separator);
-					SBmodsnote.append(Valor);
+					SBmodsnote.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "topic":
-				case "geographic":
-				case "temporal":
-				case "titleinfo":
-				case "name":
-				case "genre":
-				case "hierarchicalgeographic":
-				case "cartographics":
-				case "geographiccode":
-				case "occupation":
+				case "<subject><topic>":
+				case "<subject><geographic>":
+				case "<subject><temporal>":
+				case "<subject><titleinfo>":
+				case "<subject><name>":
+				case "<subject><genre>":
+				case "<subject><hierarchicalgeographic>":
+				case "<subject><cartographics>":
+				case "<subject><geographiccode>":
+				case "<subject><occupation>":
 					if (SBmodssubject.length()>0)
 						SBmodssubject.append(separator);
-					SBmodssubject.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					SBmodssubject.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "classification":
+				case "<classification>":
 					if (SBmodsclassification.length()>0)
 						SBmodsclassification.append(separator);
-					SBmodsclassification.append(Valor);
+					SBmodsclassification.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "relateditem":
+				case "<relateditem>":
 					if (SBmodsrelateditem.length()>0)
 						SBmodsrelateditem.append(separator);
-					SBmodsrelateditem.append(Valor);
+					SBmodsrelateditem.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "identifier":
+				case "<identifier>":
 					if (SBmodsidentifier.length()>0)
 						SBmodsidentifier.append(separator);
-					SBmodsidentifier.append(Valor);
+					SBmodsidentifier.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "physicallocation":
-				case "shelflocator":
-				case "url":
-				case "holdingsimple":
-				case "holdingexternal":
+				case "<location><physicallocation>":
+				case "<location><shelflocator>":
+				case "<location><url>":
+				case "<location><holdingsimple>":
+				case "<location><holdingexternal>":
 					if (SBmodslocation.length()>0)
 						SBmodslocation.append(separator);
-					SBmodslocation.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					SBmodslocation.append(setValue(Valor,Enstring.getValue()));
 					break;
 
-				case "accesscondition":
+				case "<accesscondition>":
 					if (SBmodsaccesscondition.length()>0)
 						SBmodsaccesscondition.append(separator);
-					SBmodsaccesscondition.append(Valor);
+					SBmodsaccesscondition.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "detail":
-				case "date":
-				case "text":
+				case "<part><detail>":
+				case "<part><date>":
+				case "<part><text>":
 					if (SBmodspart.length()>0)
 						SBmodspart.append(separator);
-					SBmodspart.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					SBmodspart.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "extentpart":	
+				case "<extentpart>":	
 					if (SBmodspart.length()>0)
 						SBmodspart.append(separator);
-					SBmodspart.append(setValue(Valor,"extent",ListaMODSVALUES));
+					SBmodspart.append(setValue(Valor,Enstring.getValue()));
 					break;
-				case "extension":
+				case "<extension>":
 					if (SBmodsextension.length()>0)
 						SBmodsextension.append(separator);
-					SBmodsextension.append(Valor);
+					SBmodsextension.append(setValue(Valor,Enstring.getValue()));
 					break;	
 				
-				case "recordcontentsource":
-				case "recordcreationdate":
-				case "recordchangedate":
-				case "recordidentifier":
-				case "recordorigin":
-				case "languageofcataloging":
-				case "descriptionstandard":
+				case "<recordinfo><recordcontentsource>":
+				case "<recordinfo><recordcreationdate>":
+				case "<recordinfo><recordchangedate>":
+				case "<recordinfo><recordidentifier>":
+				case "<recordinfo><recordorigin>":
+				case "<recordinfo><languageofcataloging>":
+				case "<recordinfo><descriptionstandard>":
 					if (SBmodsrecordinfo.length()>0)
 						SBmodsrecordinfo.append(separator);
-					SBmodsrecordinfo.append(setValue(Valor,string.toLowerCase(),ListaMODSVALUES));
+					SBmodsrecordinfo.append(setValue(Valor,Enstring.getValue()));
 					break;
 					
 				default:
@@ -495,6 +501,7 @@ public class SaveProcessMainOAIPMHCat {
 		String modsorigininfo=null;
 		String modslanguage=null;
 		String modsphysicaldescription=null;
+		String modsabstract=null;
 		String modstableofcontents=null;
 		String modstargetaudience=null;
 		String modsnote=null;
@@ -540,6 +547,48 @@ public class SaveProcessMainOAIPMHCat {
 		if (!SBdatecreated.toString().trim().isEmpty())
 			datecreated="'"+SBdatecreated.toString()+"'";
 		
+		if (!SBmodstitleInfo.toString().trim().isEmpty())
+			modstitleInfo="'"+SBmodstitleInfo.toString()+"'";
+		if (!SBmodsname.toString().trim().isEmpty())
+			modsname="'"+SBmodsname.toString()+"'";
+		if (!SBmodstypeofresource.toString().trim().isEmpty())
+			modstypeofresource="'"+SBmodstypeofresource.toString()+"'";
+		if (!SBmodsgenre.toString().trim().isEmpty())
+			modsgenre="'"+SBmodsgenre.toString()+"'";
+		if (!SBmodsorigininfo.toString().trim().isEmpty())
+			modsorigininfo="'"+SBmodsorigininfo.toString()+"'";
+		if (!SBmodslanguage.toString().trim().isEmpty())
+			modslanguage="'"+SBmodslanguage.toString()+"'";
+		if (!SBmodsphysicaldescription.toString().trim().isEmpty())
+			modsphysicaldescription="'"+SBmodsphysicaldescription.toString()+"'";
+		if (!SBmodsabstract.toString().trim().isEmpty())
+			modsabstract="'"+SBmodsabstract.toString()+"'";
+		if (!SBmodstableofcontents.toString().trim().isEmpty())
+			modstableofcontents="'"+SBmodstableofcontents.toString()+"'";
+		if (!SBmodstargetaudience.toString().trim().isEmpty())
+			modstargetaudience="'"+SBmodstargetaudience.toString()+"'";
+		if (!SBmodsnote.toString().trim().isEmpty())
+			modsnote="'"+SBmodsnote.toString()+"'";
+		if (!SBmodssubject.toString().trim().isEmpty())
+			modssubject="'"+SBmodssubject.toString()+"'";
+		if (!SBmodsclassification.toString().trim().isEmpty())
+			modsclassification="'"+SBmodsclassification.toString()+"'";
+		if (!SBmodsrelateditem.toString().trim().isEmpty())
+			modsrelateditem="'"+SBmodsrelateditem.toString()+"'";
+		if (!SBmodsidentifier.toString().trim().isEmpty())
+			modsidentifier="'"+SBmodsidentifier.toString()+"'";
+		if (!SBmodslocation.toString().trim().isEmpty())
+			modslocation="'"+SBmodslocation.toString()+"'";
+		if (!SBmodsaccesscondition.toString().trim().isEmpty())
+			modsaccesscondition="'"+SBmodsaccesscondition.toString()+"'";
+		if (!SBmodspart.toString().trim().isEmpty())
+			modspart="'"+SBmodspart.toString()+"'";
+		if (!SBmodsextension.toString().trim().isEmpty())
+			modsextension="'"+SBmodsextension.toString()+"'";
+		if (!SBmodsrecordinfo.toString().trim().isEmpty())
+			modsrecordinfo="'"+SBmodsrecordinfo.toString()+"'";
+		
+		
 		
 		Calendar Start = new GregorianCalendar();
 		Date dateCal = Start.getTime();
@@ -574,6 +623,7 @@ public class SaveProcessMainOAIPMHCat {
 					  "`modsorigininfo`," +
 					  "`modslanguage`," +
 					  "`modsphysicaldescription`," +
+					  "`modsabstract`," +
 					  "`modstableofcontents`," +
 					  "`modstargetaudience`," +
 					  "`modsnote`," +
@@ -605,25 +655,26 @@ public class SaveProcessMainOAIPMHCat {
 					datecreated+","+
 					coverage+","+
 					rights+","+
-					SBmodstitleInfo+","+
-					SBmodsname+","+
-					SBmodstypeofresource+","+
-					SBmodsgenre+","+
-					SBmodsorigininfo+","+
-					SBmodslanguage+","+
-					SBmodsphysicaldescription+","+
-					SBmodstableofcontents+","+
-					SBmodstargetaudience+","+
-					SBmodsnote+","+
-					SBmodssubject+","+
-					SBmodsclassification+","+
-					SBmodsrelateditem+","+
-					SBmodsidentifier+","+
-					SBmodslocation+","+
-					SBmodsaccesscondition+","+
-					SBmodspart+","+
-					SBmodsextension+","+
-					SBmodsrecordinfo+
+					modstitleInfo+","+
+					modsname+","+
+					modstypeofresource+","+
+					modsgenre+","+
+					modsorigininfo+","+
+					modslanguage+","+
+					modsphysicaldescription+","+
+					modsabstract+","+
+					modstableofcontents+","+
+					modstargetaudience+","+
+					modsnote+","+
+					modssubject+","+
+					modsclassification+","+
+					modsrelateditem+","+
+					modsidentifier+","+
+					modslocation+","+
+					modsaccesscondition+","+
+					modspart+","+
+					modsextension+","+
+					modsrecordinfo+
 					");");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -633,14 +684,17 @@ public class SaveProcessMainOAIPMHCat {
 
 
 
-	private String setValue(String valor, String string,
-			HashMap<String, String> listaMODSVALUES) {
+	private String setValue(String valor, String tipo) {
 		StringBuffer Salida=new StringBuffer();
-		Salida.append("<").append(valor);
-		for (Entry<String, String> elem : listaMODSVALUES.entrySet()) {
-			Salida.append(" ").append(elem.getKey()).append("=\"").append(elem.getValue()).append("\"");
+		String[] tipoT = tipo.split("<");
+		ArrayList<String> LtipoT=new ArrayList<String>();
+		for (String string : tipoT)
+			LtipoT.add(string);
+		Collections.reverse(LtipoT);
+		Salida.append(tipo).append(valor);
+		for (String string : LtipoT) {
+			Salida.append("</").append(string);
 		}
-		Salida.append(">");
 		return Salida.toString();
 	}
 
@@ -720,6 +774,7 @@ public class SaveProcessMainOAIPMHCat {
 				  "`modsorigininfo` LONGTEXT DEFAULT NULL,"+
 				  "`modslanguage` LONGTEXT DEFAULT NULL,"+
 				  "`modsphysicaldescription` LONGTEXT DEFAULT NULL,"+
+				  "`modsabstract` LONGTEXT DEFAULT NULL,"+
 				  "`modstableofcontents` LONGTEXT DEFAULT NULL,"+
 				  "`modstargetaudience` LONGTEXT DEFAULT NULL,"+
 				  "`modsnote` LONGTEXT DEFAULT NULL,"+

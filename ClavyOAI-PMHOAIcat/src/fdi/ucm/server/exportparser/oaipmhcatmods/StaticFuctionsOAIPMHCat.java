@@ -101,27 +101,6 @@ public class StaticFuctionsOAIPMHCat {
 		return false;
 	}
 
-	public static ArrayList<String> getCategoriasOAIPMHMODS(
-			CompleteElementType hastype) {
-ArrayList<String> Salida=new ArrayList<String>();
-		
-		ArrayList<CompleteOperationalView> Shows = hastype.getShows();
-		for (CompleteOperationalView show : Shows) {
-			
-			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.MODS.toLowerCase()))
-			{
-				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
-				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) {
-					if (CompleteOperationalValueType.getName().toLowerCase().equals(StaticNamesOAIPMHCat.TYPE.toLowerCase()))
-						if (!CompleteOperationalValueType.getDefault().trim().isEmpty())
-							Salida.add(CompleteOperationalValueType.getDefault());
-
-				}
-			}
-		}
-		
-		return Salida;
-	}
 	
 	public static HashMap<String,String> getCategoriasOAIPMHMODSValues(
 			CompleteElementType hastype) {
@@ -130,7 +109,7 @@ ArrayList<String> Salida=new ArrayList<String>();
 		ArrayList<CompleteOperationalView> Shows = hastype.getShows();
 		for (CompleteOperationalView show : Shows) {
 			
-			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.MODSVALUE.toLowerCase()))
+			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.MODS.toLowerCase()))
 			{
 				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
 				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) 
