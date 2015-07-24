@@ -693,6 +693,7 @@ public class SaveProcessMainOAIPMHCat {
 		Collections.reverse(LtipoT);
 		Salida.append(tipo).append(valor);
 		for (String string : LtipoT) {
+			if (!string.isEmpty())
 			Salida.append("</").append(string);
 		}
 		return Salida.toString();
