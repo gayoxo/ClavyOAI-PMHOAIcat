@@ -694,15 +694,23 @@ public class SaveProcessMainOAIPMHCat {
 
 	private String setValue(String valor, String tipo) {
 		StringBuffer Salida=new StringBuffer();
-		String[] tipoT = tipo.split("<");
+		String[] tipoT = tipo.toLowerCase().split("<");
 		ArrayList<String> LtipoT=new ArrayList<String>();
 		for (String string : tipoT)
 			LtipoT.add(string);
 		Collections.reverse(LtipoT);
-		Salida.append(tipo).append(valor);
+		Salida.append(tipo.toLowerCase()).append(valor);
 		for (String string : LtipoT) {
 			if (!string.isEmpty())
-			Salida.append("</").append(string);
+				{
+				String[] Final = string.split(">");
+				if (!Final[0].isEmpty())
+					{
+					String[] Final2 = Final[0].split(" ");
+					if (!Final2[0].isEmpty())
+						Salida.append("</").append(Final2[0]).append(">");
+					}
+				}
 		}
 		return Salida.toString();
 	}
