@@ -306,6 +306,7 @@ public class SaveProcessMainOAIPMHCat {
 				String string=Enstring.getKey();
 				
 				switch (string.toLowerCase()) {
+				case "<titleinfo>":
 				case "<titleinfo><title>":
 				case "<titleinfo><subtitle>":
 				case "<titleinfo><partnumber>":
@@ -315,6 +316,7 @@ public class SaveProcessMainOAIPMHCat {
 						SBmodstitleInfo.append(separator);
 					SBmodstitleInfo.append(setValue(Valor,Enstring.getValue()));
 					break;
+				case "<name>":
 				case "<name><namepart>":
 				case "<name><displayform>":
 				case "<name><affiliation>":
@@ -335,6 +337,7 @@ public class SaveProcessMainOAIPMHCat {
 						SBmodsgenre.append(separator);
 					SBmodsgenre.append(setValue(Valor,Enstring.getValue()));
 					break;
+				case "<origininfo>":
 				case "<origininfo><place>":
 				case "<origininfo><publisher>":
 				case "<origininfo><dateissued>":
@@ -351,6 +354,7 @@ public class SaveProcessMainOAIPMHCat {
 						SBmodsorigininfo.append(separator);
 					SBmodsorigininfo.append(setValue(Valor,Enstring.getValue()));
 					break;
+				case "<language>":
 				case "<language><languageterm>":
 				case "<language><scriptterm>":
 					String[] SS3=Valor.split("[,|;|:|.]");
@@ -364,6 +368,7 @@ public class SaveProcessMainOAIPMHCat {
 						}
 					}
 					break;
+				case "<physicaldescription>":
 				case "<physicaldescription><form>":
 				case "<physicaldescription><reformattingquality>":
 				case "<physicaldescription><internetmediatype>":
@@ -394,6 +399,7 @@ public class SaveProcessMainOAIPMHCat {
 						SBmodsnote.append(separator);
 					SBmodsnote.append(setValue(Valor,Enstring.getValue()));
 					break;
+				case "<subject>":
 				case "<subject><topic>":
 				case "<subject><geographic>":
 				case "<subject><temporal>":
@@ -423,6 +429,7 @@ public class SaveProcessMainOAIPMHCat {
 						SBmodsidentifier.append(separator);
 					SBmodsidentifier.append(setValue(Valor,Enstring.getValue()));
 					break;
+				case "<location>":
 				case "<location><physicallocation>":
 				case "<location><shelflocator>":
 				case "<location><url>":
@@ -438,6 +445,7 @@ public class SaveProcessMainOAIPMHCat {
 						SBmodsaccesscondition.append(separator);
 					SBmodsaccesscondition.append(setValue(Valor,Enstring.getValue()));
 					break;
+				case "<part>":
 				case "<part><detail>":
 				case "<part><date>":
 				case "<part><text>":
@@ -455,7 +463,7 @@ public class SaveProcessMainOAIPMHCat {
 						SBmodsextension.append(separator);
 					SBmodsextension.append(setValue(Valor,Enstring.getValue()));
 					break;	
-				
+				case "<recordinfo>":	
 				case "<recordinfo><recordcontentsource>":
 				case "<recordinfo><recordcreationdate>":
 				case "<recordinfo><recordchangedate>":
