@@ -699,7 +699,8 @@ public class SaveProcessMainOAIPMHCat {
 		for (String string : tipoT)
 			LtipoT.add(string);
 		Collections.reverse(LtipoT);
-		Salida.append(tipo.toLowerCase()).append(valor);
+		String tiposub=tipo.replaceAll("$i", valor);
+		Salida.append(tiposub.toLowerCase()).append(valor);
 		for (String string : LtipoT) {
 			if (!string.isEmpty())
 				{
