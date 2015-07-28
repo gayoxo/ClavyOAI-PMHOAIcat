@@ -201,7 +201,7 @@ public class SaveProcessMainOAIPMHCat {
 				case "dc:language":
 					
 					
-					String[] SS=Valor.split("[,|;|:|.]");
+					String[] SS=Valor.split("[,|;|:|.| ]");
 					for (String string2 : SS) {
 						if (!string2.trim().isEmpty())
 						{
@@ -225,7 +225,7 @@ public class SaveProcessMainOAIPMHCat {
 					break;
 				case "dc:format":
 					
-					String[] SS3=Valor.split("[,|;|:|.]");
+					String[] SS3=Valor.split("[,|;|:|.| ]");
 					for (String string2 : SS3) {
 						if (!string2.trim().isEmpty())
 						{
@@ -239,7 +239,7 @@ public class SaveProcessMainOAIPMHCat {
 					break;
 				case "dc:type":
 					
-					String[] SS2=Valor.split("[,|;|:|.]");
+					String[] SS2=Valor.split("[,|;|:|.| ]");
 					for (String string2 : SS2) {
 					
 						if (!string2.trim().isEmpty())
@@ -328,14 +328,28 @@ public class SaveProcessMainOAIPMHCat {
 					SBmodsname.append(setValue(Valor,Enstring.getValue()));
 					break;
 				case "<typeofresource>":
+					String[] SStr=Valor.split("[,|;|:|.| ]");
+					for (String string2 : SStr) {
+						if (!string2.trim().isEmpty())
+						{
+						
 					if (SBmodstypeofresource.length()>0)
 						SBmodstypeofresource.append(separator);
-					SBmodstypeofresource.append(setValue(Valor,Enstring.getValue()));
+					SBmodstypeofresource.append(setValue(string2,Enstring.getValue()));
+						}
+					}
 					break;
 				case "<genre>":
+					String[] SSgen=Valor.split("[,|;|:|.| ]");
+					for (String string2 : SSgen) {
+						if (!string2.trim().isEmpty())
+						{
+						
 					if (SBmodsgenre.length()>0)
 						SBmodsgenre.append(separator);
-					SBmodsgenre.append(setValue(Valor,Enstring.getValue()));
+					SBmodsgenre.append(setValue(string2,Enstring.getValue()));
+						}
+					}
 					break;
 				case "<origininfo>":
 				case "<origininfo><place>":
@@ -357,14 +371,14 @@ public class SaveProcessMainOAIPMHCat {
 				case "<language>":
 				case "<language><languageterm>":
 				case "<language><scriptterm>":
-					String[] SS3=Valor.split("[,|;|:|.]");
-					for (String string2 : SS3) {
+					String[] SSlang=Valor.split("[,|;|:|.| ]");
+					for (String string2 : SSlang) {
 						if (!string2.trim().isEmpty())
 						{
 						
 					if (SBmodslanguage.length()>0)
 						SBmodslanguage.append(separator);
-					SBmodslanguage.append(setValue(Valor,Enstring.getValue()));
+					SBmodslanguage.append(setValue(string2,Enstring.getValue()));
 						}
 					}
 					break;
@@ -415,9 +429,16 @@ public class SaveProcessMainOAIPMHCat {
 					SBmodssubject.append(setValue(Valor,Enstring.getValue()));
 					break;
 				case "<classification>":
+					String[] SSclas=Valor.split("[,|;|:|.| ]");
+					for (String string2 : SSclas) {
+						if (!string2.trim().isEmpty())
+						{
+						
 					if (SBmodsclassification.length()>0)
 						SBmodsclassification.append(separator);
-					SBmodsclassification.append(setValue(Valor,Enstring.getValue()));
+					SBmodsclassification.append(setValue(string2,Enstring.getValue()));
+						}
+					}
 					break;
 				case "<relateditem>":
 					if (SBmodsrelateditem.length()>0)
