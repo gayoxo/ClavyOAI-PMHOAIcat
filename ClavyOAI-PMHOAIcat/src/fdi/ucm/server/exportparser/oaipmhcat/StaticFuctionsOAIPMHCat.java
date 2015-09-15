@@ -10,7 +10,6 @@ import fdi.ucm.server.modelComplete.collection.document.CompleteOperationalValue
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteElementType;
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteGrammar;
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteOperationalValueType;
-import fdi.ucm.server.modelComplete.collection.grammar.CompleteOperationalView;
 
 /**
  * Clase que genera las funciones estaticas para Oda.
@@ -28,18 +27,16 @@ public class StaticFuctionsOAIPMHCat {
 		
 		ArrayList<String> Salida=new ArrayList<String>();
 		
-		ArrayList<CompleteOperationalView> Shows = hastype.getShows();
-		for (CompleteOperationalView show : Shows) {
+		ArrayList<CompleteOperationalValueType> Shows = hastype.getShows();
+		for (CompleteOperationalValueType show : Shows) {
 			
-			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
+			if (show.getView().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
 			{
-				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
-				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) {
-					if (CompleteOperationalValueType.getName().toLowerCase().equals(StaticNamesOAIPMHCat.TYPE.toLowerCase()))
-						if (!CompleteOperationalValueType.getDefault().trim().isEmpty())
-							Salida.add(CompleteOperationalValueType.getDefault());
+					if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.TYPE.toLowerCase()))
+						if (!show.getDefault().trim().isEmpty())
+							Salida.add(show.getDefault());
 
-				}
+				
 			}
 		}
 		
@@ -51,7 +48,7 @@ public class StaticFuctionsOAIPMHCat {
 		ArrayList<CompleteOperationalValue> ShowsE = documentInspect.getViewsValues();
 		for (CompleteOperationalValue show : ShowsE) {
 			
-			if (show.getType().getView().getName().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
+			if (show.getType().getView().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
 			{
 
 					if (show.getType().getName().toLowerCase().equals(StaticNamesOAIPMHCat.IGNORE.toLowerCase()))
@@ -74,26 +71,24 @@ public class StaticFuctionsOAIPMHCat {
 
 	public static boolean isIgnored(CompleteGrammar hastype) {
 
-		ArrayList<CompleteOperationalView> Shows = hastype.getViews();
-		for (CompleteOperationalView show : Shows) {
+		ArrayList<CompleteOperationalValueType> Shows = hastype.getViews();
+		for (CompleteOperationalValueType show : Shows) {
 			
-			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
+			if (show.getView().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
 			{
-				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
-				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) {
-					if (CompleteOperationalValueType.getName().toLowerCase().equals(StaticNamesOAIPMHCat.IGNORE.toLowerCase()))
-						if (!CompleteOperationalValueType.getDefault().trim().isEmpty())
+
+					if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.IGNORE.toLowerCase()))
+						if (!show.getDefault().trim().isEmpty())
 							{
 							boolean Salida=true;
 							try {
-								Salida=Boolean.parseBoolean(CompleteOperationalValueType.getDefault());
+								Salida=Boolean.parseBoolean(show.getDefault());
 							} catch (Exception e) {
 							}
 							
 							return Salida;
 							}
 
-				}
 			}
 		}
 		
