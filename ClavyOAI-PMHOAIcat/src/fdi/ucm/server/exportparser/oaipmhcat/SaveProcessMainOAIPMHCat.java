@@ -114,7 +114,7 @@ public class SaveProcessMainOAIPMHCat {
 			{
 			ArrayList<String> ListaDC = Tabla_DC.get(elementInspect.getHastype().getClavilenoid());
 			String Valor = separatorClean(((CompleteTextElement) elementInspect).getValue());
-			if (Valor.trim()!=null&&ListaDC!=null)
+			if (Valor!=null&&!Valor.trim().isEmpty()&&ListaDC!=null)
 			{
 			for (String string : ListaDC) {
 				
@@ -144,9 +144,12 @@ public class SaveProcessMainOAIPMHCat {
 					
 					String[] SS=Valor.split("[,|;|:|.]");
 					for (String string2 : SS) {
+						if (!string2.trim().isEmpty())
+						{
 						if (SBlanguage.length()>0)
 							SBlanguage.append(separator);	
 						SBlanguage.append(string2);
+						}
 					}
 					
 					
@@ -165,9 +168,13 @@ public class SaveProcessMainOAIPMHCat {
 					
 					String[] SS3=Valor.split("[,|;|:|.]");
 					for (String string2 : SS3) {
+						if (!string2.trim().isEmpty())
+						{
+						
 					if (SBformat.length()>0)
 						SBformat.append(separator);
 					SBformat.append(string2);
+						}
 					}
 					
 					break;
@@ -175,9 +182,14 @@ public class SaveProcessMainOAIPMHCat {
 					
 					String[] SS2=Valor.split("[,|;|:|.]");
 					for (String string2 : SS2) {
-					if (SBtype.length()>0)
+					
+						if (!string2.trim().isEmpty())
+						{
+						
+						if (SBtype.length()>0)
 						SBtype.append(separator);
 					SBtype.append(string2);
+						}
 					}
 					
 					break;
