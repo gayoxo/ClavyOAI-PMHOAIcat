@@ -110,7 +110,7 @@ public class SaveProcessMainOAIPMHCat {
 
 	private void processOV() {
 		for (CompleteDocuments documentInspect : toOda.getEstructuras()) {
-			if (!StaticFuctionsOAIPMHCat.isIgnored(documentInspect))
+			if (!StaticFuctionsOAIPMHCat.isIgnored(documentInspect,toOda.getMetamodelGrammar()))
 				processDocument(documentInspect);
 		}
 		
