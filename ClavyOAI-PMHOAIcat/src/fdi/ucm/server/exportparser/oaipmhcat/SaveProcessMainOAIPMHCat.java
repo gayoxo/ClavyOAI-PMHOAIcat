@@ -9,6 +9,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import fdi.ucm.server.modelComplete.CompleteImportRuntimeException;
 import fdi.ucm.server.modelComplete.collection.CompleteCollection;
 import fdi.ucm.server.modelComplete.collection.CompleteLogAndUpdates;
@@ -42,17 +51,74 @@ public class SaveProcessMainOAIPMHCat {
 	private static final char separator='~';
 	private static final char separator_comodin='¬';
 			
-
+	private HashMap<String, String> Language;
 	/**
 	 * Constructor por defecto
 	 * @param cL 
+	 * @param pathFile 
 	 * @param Coleccion coleccion a insertar en oda.
 	 */
-	public SaveProcessMainOAIPMHCat(CompleteCollection coleccion, CompleteLogAndUpdates cL){
+	public SaveProcessMainOAIPMHCat(CompleteCollection coleccion, CompleteLogAndUpdates cL, String pathFile){
 		toOda=coleccion;
 		ColectionLog=cL;
+		
+		
+		Language=new HashMap<String, String>();
+		
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		   	  DocumentBuilder db = dbf.newDocumentBuilder();
+		   	  Document doc = db.parse(pathFile);
+		   	  doc.getDocumentElement().normalize();
+		   	  System.out.println("Clavy? " + doc.getDocumentElement().getNodeName());
+		   	  NodeList nodeLst = doc.getElementsByTagName("language");
+		   	  System.out.println("Information of all Saves");
+		   	  
+		   	for (int s = 0; s < nodeLst.getLength(); s++) {
+
+        	    Node fstNode = nodeLst.item(s);
+        	    
+        	    if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+        	  
+        	    	
+        	           Element fstElmnt = (Element) fstNode;
+        	      NodeList originalNmElmntLst = fstElmnt.getElementsByTagName("original");
+        	      Element originalnameNmElmnt = (Element) originalNmElmntLst.item(0);
+        	      NodeList originalnameNmElement = originalnameNmElmnt.getChildNodes();
+        	      System.out.println("Jarname : "  + ((Node) originalnameNmElement.item(0)).getNodeValue());
+        	      
+        	      NodeList synonimNmElmntLst = fstElmnt.getElementsByTagName("synonim");
+        	      Element synonimNmElmnt = (Element) synonimNmElmntLst.item(0);
+        	      NodeList synonimNmElement = synonimNmElmnt.getChildNodes();
+        	      System.out.println("jarpath  : " + ((Node) synonimNmElement.item(0)).getNodeValue());
+        	      
+        	      Language.put(((Node) originalnameNmElement.item(0)).getNodeValue(), ((Node) synonimNmElement.item(0)).getNodeValue());
+//        	      SavePair nuevo=new SavePair(((Node) jarnameNmElement.item(0)).getNodeValue(), ((Node) jarpathNmElement.item(0)).getNodeValue());
+//        	      
+//        	      ListaSer.add(nuevo);
+        	    }
+
+        	  }
+		   	  
+		} catch (Exception e) {
+			ColectionLog.getLogLines().add("Error en carga de XML");
+		}
+		 
+		
+   	  
+   	  
+//		try {
+//			Document doc = getDocument(pathFile);
+//			Sinonimos=true;
+//			System.out.println(doc.getElementsByTagName("dc:language"));
+//		    //Element config = doc.getDocumentElement();
+//		} catch (Exception e) {
+//			ColectionLog.getLogLines().add("Error en carga de XML");
+//		}
+		
 	}
 
+	
 	
 
 	/**

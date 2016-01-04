@@ -11,6 +11,7 @@ import fdi.ucm.server.modelComplete.collection.document.CompleteOperationalValue
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteElementType;
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteGrammar;
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteOperationalValueType;
+import fdi.ucm.server.modelComplete.collection.grammar.CompleteOperationalView;
 
 /**
  * Clase que genera las funciones estaticas para Oda.
@@ -28,16 +29,18 @@ public class StaticFuctionsOAIPMHCat {
 		
 		ArrayList<String> Salida=new ArrayList<String>();
 		
-		ArrayList<CompleteOperationalValueType> Shows = hastype.getShows();
-		for (CompleteOperationalValueType show : Shows) {
+		ArrayList<CompleteOperationalView> Shows = hastype.getShows();
+		for (CompleteOperationalView show : Shows) {
 			
-			if (show.getView().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
+			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
 			{
+				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
+				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) {
+					if (CompleteOperationalValueType.getName().toLowerCase().equals(StaticNamesOAIPMHCat.TYPE.toLowerCase()))
+						if (!CompleteOperationalValueType.getDefault().trim().isEmpty())
+							Salida.add(CompleteOperationalValueType.getDefault());
 
-					if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.TYPE.toLowerCase()))
-						if (!show.getDefault().trim().isEmpty())
-							Salida.add(show.getDefault());
-
+				}
 			}
 		}
 		
@@ -49,7 +52,7 @@ public class StaticFuctionsOAIPMHCat {
 		ArrayList<CompleteOperationalValue> ShowsE = documentInspect.getViewsValues();
 		for (CompleteOperationalValue show : ShowsE) {
 			
-			if (show.getType().getView().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
+			if (show.getType().getView().getName().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
 			{
 
 					if (show.getType().getName().toLowerCase().equals(StaticNamesOAIPMHCat.IGNORE.toLowerCase()))
@@ -72,23 +75,26 @@ public class StaticFuctionsOAIPMHCat {
 
 	public static boolean isIgnored(CompleteGrammar hastype) {
 
-		ArrayList<CompleteOperationalValueType> Shows = hastype.getViews();
-		for (CompleteOperationalValueType show : Shows) {
+		ArrayList<CompleteOperationalView> Shows = hastype.getViews();
+		for (CompleteOperationalView show : Shows) {
 			
-			if (show.getView().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
+			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.OAIPMH.toLowerCase()))
 			{
-					if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.IGNORE.toLowerCase()))
-						if (!show.getDefault().trim().isEmpty())
+				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
+				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) {
+					if (CompleteOperationalValueType.getName().toLowerCase().equals(StaticNamesOAIPMHCat.IGNORE.toLowerCase()))
+						if (!CompleteOperationalValueType.getDefault().trim().isEmpty())
 							{
 							boolean Salida=true;
 							try {
-								Salida=Boolean.parseBoolean(show.getDefault());
+								Salida=Boolean.parseBoolean(CompleteOperationalValueType.getDefault());
 							} catch (Exception e) {
 							}
 							
 							return Salida;
 							}
 
+				}
 			}
 		}
 		
@@ -100,12 +106,14 @@ public class StaticFuctionsOAIPMHCat {
 			CompleteElementType hastype) {
 		HashMap<String,String> Salida=new HashMap<String,String>();
 		
-		ArrayList<CompleteOperationalValueType> Shows = hastype.getShows();
-		for (CompleteOperationalValueType show : Shows) {
+		ArrayList<CompleteOperationalView> Shows = hastype.getShows();
+		for (CompleteOperationalView show : Shows) {
 			
-			if (show.getView().toLowerCase().equals(StaticNamesOAIPMHCat.MODS.toLowerCase()))
+			if (show.getName().toLowerCase().equals(StaticNamesOAIPMHCat.MODS.toLowerCase()))
 			{
-					Salida.put(show.getName().toLowerCase(), show.getDefault());
+				ArrayList<CompleteOperationalValueType> ShowValue = show.getValues();
+				for (CompleteOperationalValueType CompleteOperationalValueType : ShowValue) 
+					Salida.put(CompleteOperationalValueType.getName().toLowerCase(), CompleteOperationalValueType.getDefault());
 			}
 		}
 		
