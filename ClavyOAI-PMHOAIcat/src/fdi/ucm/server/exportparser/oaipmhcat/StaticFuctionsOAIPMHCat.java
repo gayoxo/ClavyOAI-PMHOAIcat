@@ -4,16 +4,12 @@
 package fdi.ucm.server.exportparser.oaipmhcat;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 import fdi.ucm.server.modelComplete.collection.document.CompleteDocuments;
-import fdi.ucm.server.modelComplete.collection.document.CompleteElement;
 import fdi.ucm.server.modelComplete.collection.document.CompleteOperationalValue;
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteElementType;
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteGrammar;
 import fdi.ucm.server.modelComplete.collection.grammar.CompleteOperationalValueType;
-import fdi.ucm.server.modelComplete.collection.grammar.CompleteStructure;
 
 /**
  * Clase que genera las funciones estaticas para Oda.
@@ -47,7 +43,7 @@ public class StaticFuctionsOAIPMHCat {
 		return Salida;
 	}
 
-	public static boolean isIgnored(CompleteDocuments documentInspect,List<CompleteGrammar> lista) {
+	public static boolean isIgnored(CompleteDocuments documentInspect) {
 		
 		ArrayList<CompleteOperationalValue> ShowsE = documentInspect.getViewsValues();
 		for (CompleteOperationalValue show : ShowsE) {
@@ -70,12 +66,7 @@ public class StaticFuctionsOAIPMHCat {
 		}
 		
 		
-		for (CompleteGrammar completeOperationalValue : lista) {
-			if (isInGrammar(documentInspect, completeOperationalValue)&&isIgnored(completeOperationalValue))
-					return true;
-		}
-		
-		return false;
+		return isIgnored(documentInspect.getDocument());
 	}
 
 	public static boolean isIgnored(CompleteGrammar hastype) {
@@ -101,31 +92,6 @@ public class StaticFuctionsOAIPMHCat {
 			}
 		}
 		
-		return false;
-	}
-	
-	
-	public static boolean isInGrammar(CompleteDocuments iterable_element,
-			CompleteGrammar completeGrammar) {
-		HashSet<Long> ElemT=new HashSet<Long>();
-		for (CompleteElement dd : iterable_element.getDescription()) {
-			ElemT.add(dd.getHastype().getClavilenoid());
-		}
-		
-		return isInGrammar(ElemT, completeGrammar.getSons());
-		
-		
-	}
-
-
-
-	private static boolean isInGrammar(HashSet<Long> elemT,
-			List<CompleteStructure> sons) {
-		for (CompleteStructure CSlong1 : sons) {
-			if (elemT.contains(CSlong1.getClavilenoid())||isInGrammar(elemT, CSlong1.getSons()))
-				return true;
-			
-		}
 		return false;
 	}
 	
