@@ -153,15 +153,23 @@ public class SaveProcessMainOAIPMHCat {
 				case "dc:language":
 					
 					
-					String[] SS=Valor.split("[,|;|:|.]");
-					for (String string2 : SS) {
-						string2 = Sinonimos.getLanguage().get(string2.toLowerCase());
-						if (!string2.trim().isEmpty())
+					String[] SS=Valor.split("[,|;|:|.| |/]");
+					for (String stringori2 : SS) {
+						
+						if (!stringori2.trim().isEmpty())
+						{
+						
+						String string2 = Sinonimos.getLanguage().get(stringori2.trim().toLowerCase());
+						if (string2!=null)
 						{
 						if (SBlanguage.length()>0)
 							SBlanguage.append(separator);	
 						
 						SBlanguage.append(string2);
+						}
+						else 
+							
+							ColectionLog.getLogLines().add("Language ->"+stringori2+" desconocido");	
 						}
 					}
 					
@@ -179,7 +187,7 @@ public class SaveProcessMainOAIPMHCat {
 					break;
 				case "dc:format":
 					
-					String[] SS3=Valor.split("[,|;|:|.]");
+					String[] SS3=Valor.split("[,|;|:|.| |/]");
 					for (String string2 : SS3) {
 						if (!string2.trim().isEmpty())
 						{
@@ -193,7 +201,7 @@ public class SaveProcessMainOAIPMHCat {
 					break;
 				case "dc:type":
 					
-					String[] SS2=Valor.split("[,|;|:|.]");
+					String[] SS2=Valor.split("[,|;|:|.| |/]");
 					for (String string2 : SS2) {
 					
 						if (!string2.trim().isEmpty())

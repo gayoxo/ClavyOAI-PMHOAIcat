@@ -209,13 +209,23 @@ public class SaveProcessMainOAIPMHCat {
 				case "dc:language":
 					
 					
-					String[] SS=Valor.split("[,|;|:|.| ]");
-					for (String string2 : SS) {
-						if (!string2.trim().isEmpty())
+					String[] SS=Valor.split("[,|;|:|.| |/]");
+					for (String stringori2 : SS) {
+						
+						if (!stringori2.trim().isEmpty())
+						{
+						
+						String string2 = Sinonimos.getLanguage().get(stringori2.trim().toLowerCase());
+						if (string2!=null)
 						{
 						if (SBlanguage.length()>0)
 							SBlanguage.append(separator);	
+						
 						SBlanguage.append(string2);
+						}
+						else 
+							
+							ColectionLog.getLogLines().add("Language ->"+stringori2+" desconocido");	
 						}
 					}
 					
@@ -233,7 +243,7 @@ public class SaveProcessMainOAIPMHCat {
 					break;
 				case "dc:format":
 					
-					String[] SS3=Valor.split("[,|;|:|.| ]");
+					String[] SS3=Valor.split("[,|;|:|.| |/]");
 					for (String string2 : SS3) {
 						if (!string2.trim().isEmpty())
 						{
@@ -247,7 +257,7 @@ public class SaveProcessMainOAIPMHCat {
 					break;
 				case "dc:type":
 					
-					String[] SS2=Valor.split("[,|;|:|.| ]");
+					String[] SS2=Valor.split("[,|;|:|.| |/]");
 					for (String string2 : SS2) {
 					
 						if (!string2.trim().isEmpty())
@@ -336,7 +346,7 @@ public class SaveProcessMainOAIPMHCat {
 					SBmodsname.append(setValue(Valor,Enstring.getValue()));
 					break;
 				case "<typeofresource>":
-					String[] SStr=Valor.split("[,|;|:|.| ]");
+					String[] SStr=Valor.split("[,|;|:|.| |/]");
 					for (String string2 : SStr) {
 						if (!string2.trim().isEmpty())
 						{
@@ -379,16 +389,23 @@ public class SaveProcessMainOAIPMHCat {
 				case "<language>":
 				case "<language><languageterm>":
 				case "<language><scriptterm>":
-					String[] SSlang=Valor.split("[,|;|:|.| ]");
-					for (String string2 : SSlang) {
-						string2 = Sinonimos.getLanguage().get(string2.toLowerCase());
-						if (!string2.trim().isEmpty())
+					String[] SSlang=Valor.split("[,|;|:|.| |/]");
+					for (String stringori2 : SSlang) {
+						if (!stringori2.trim().isEmpty())
+						{
+						String string2 = Sinonimos.getLanguage().get(stringori2.trim().toLowerCase());
+						if (string2!=null)
 						{
 						
 					if (SBmodslanguage.length()>0)
 						SBmodslanguage.append(separator);
 					SBmodslanguage.append(setValue(string2,Enstring.getValue()));
 						}
+						else 
+						
+							ColectionLog.getLogLines().add("Language ->"+stringori2+" desconocido");	
+						}
+							
 					}
 					break;
 				case "<physicaldescription>":
@@ -438,7 +455,7 @@ public class SaveProcessMainOAIPMHCat {
 					SBmodssubject.append(setValue(Valor,Enstring.getValue()));
 					break;
 				case "<classification>":
-					String[] SSclas=Valor.split("[,|;|:|.| ]");
+					String[] SSclas=Valor.split("[,|;|:|.| |/]");
 					for (String string2 : SSclas) {
 						if (!string2.trim().isEmpty())
 						{
@@ -625,7 +642,7 @@ public class SaveProcessMainOAIPMHCat {
 			modsextension="'"+SBmodsextension.toString()+"'";
 		
 		
-		SBmodsrecordinfo.append("<recordContentSource authorityURI=\"http://cellproject.net/authorities/source-database\">Ciberia</recordContentSource>");
+		SBmodsrecordinfo.append("<recordinfo><recordContentSource authorityURI=\"http://cellproject.net/authorities/source-database\">Ciberia</recordContentSource></recordinfo>");
 		
 		if (!SBmodsrecordinfo.toString().trim().isEmpty())
 			modsrecordinfo="'"+SBmodsrecordinfo.toString()+"'";
