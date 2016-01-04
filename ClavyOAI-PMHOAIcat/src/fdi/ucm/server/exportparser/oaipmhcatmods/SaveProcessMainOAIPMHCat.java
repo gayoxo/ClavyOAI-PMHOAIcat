@@ -12,13 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import fdi.ucm.server.exportparser.common.OAIPMHCatXMLSynonim;
 import fdi.ucm.server.modelComplete.CompleteImportRuntimeException;
 import fdi.ucm.server.modelComplete.collection.CompleteCollection;
 import fdi.ucm.server.modelComplete.collection.CompleteLogAndUpdates;
@@ -50,7 +44,7 @@ public class SaveProcessMainOAIPMHCat {
 	protected CompleteTextElementType IDOV;
 	private HashMap<Long, ArrayList<String>> Tabla_DC;
 	private HashMap<Long, HashMap<String, String>> Tabla_MODSValue;
-	private HashMap<String, String> Language;
+	private OAIPMHCatXMLSynonim Sinonimos;
 	private static final char separator='~';
 	private static final char separator_comodin='¬';
 			
@@ -66,46 +60,10 @@ public class SaveProcessMainOAIPMHCat {
 		ColectionLog=cL;
 		
 		
-Language=new HashMap<String, String>();
+		Sinonimos=new OAIPMHCatXMLSynonim();
 		
-		try {
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		   	  DocumentBuilder db = dbf.newDocumentBuilder();
-		   	  Document doc = db.parse(pathFile);
-		   	  doc.getDocumentElement().normalize();
-		   	  System.out.println("Clavy? " + doc.getDocumentElement().getNodeName());
-		   	  NodeList nodeLst = doc.getElementsByTagName("language");
-		   	  System.out.println("Information of all Saves");
-		   	  
-		   	for (int s = 0; s < nodeLst.getLength(); s++) {
-
-        	    Node fstNode = nodeLst.item(s);
-        	    
-        	    if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
-        	  
-        	    	
-        	           Element fstElmnt = (Element) fstNode;
-        	      NodeList originalNmElmntLst = fstElmnt.getElementsByTagName("original");
-        	      Element originalnameNmElmnt = (Element) originalNmElmntLst.item(0);
-        	      NodeList originalnameNmElement = originalnameNmElmnt.getChildNodes();
-        	      System.out.println("Jarname : "  + ((Node) originalnameNmElement.item(0)).getNodeValue());
-        	      
-        	      NodeList synonimNmElmntLst = fstElmnt.getElementsByTagName("synonim");
-        	      Element synonimNmElmnt = (Element) synonimNmElmntLst.item(0);
-        	      NodeList synonimNmElement = synonimNmElmnt.getChildNodes();
-        	      System.out.println("jarpath  : " + ((Node) synonimNmElement.item(0)).getNodeValue());
-        	      
-        	      Language.put(((Node) originalnameNmElement.item(0)).getNodeValue(), ((Node) synonimNmElement.item(0)).getNodeValue());
-//        	      SavePair nuevo=new SavePair(((Node) jarnameNmElement.item(0)).getNodeValue(), ((Node) jarpathNmElement.item(0)).getNodeValue());
-//        	      
-//        	      ListaSer.add(nuevo);
-        	    }
-
-        	  }
-		   	  
-		} catch (Exception e) {
-			ColectionLog.getLogLines().add("Error en carga de XML");
-		}
+		if (pathFile!=null&&!pathFile.isEmpty())
+			Sinonimos.processXML(pathFile,ColectionLog);
 	}
 
 
@@ -423,6 +381,7 @@ Language=new HashMap<String, String>();
 				case "<language><scriptterm>":
 					String[] SSlang=Valor.split("[,|;|:|.| ]");
 					for (String string2 : SSlang) {
+						string2 = Sinonimos.getLanguage().get(string2.toLowerCase());
 						if (!string2.trim().isEmpty())
 						{
 						
@@ -664,9 +623,14 @@ Language=new HashMap<String, String>();
 			modspart="'"+SBmodspart.toString()+"'";
 		if (!SBmodsextension.toString().trim().isEmpty())
 			modsextension="'"+SBmodsextension.toString()+"'";
+		
+		
+		SBmodsrecordinfo.append("<recordContentSource authorityURI=\"http://cellproject.net/authorities/source-database\">Ciberia</recordContentSource>");
+		
 		if (!SBmodsrecordinfo.toString().trim().isEmpty())
 			modsrecordinfo="'"+SBmodsrecordinfo.toString()+"'";
 		
+	
 		
 		
 		Calendar Start = new GregorianCalendar();
