@@ -45,6 +45,7 @@ public class SaveProcessMainOAIPMHCat {
 	private HashMap<Long, ArrayList<String>> Tabla_DC;
 	private HashMap<Long, HashMap<String, String>> Tabla_MODSValue;
 	private OAIPMHCatXMLSynonim Sinonimos;
+	private boolean Controlado;
 	private static final char separator='~';
 	private static final char separator_comodin='¬';
 			
@@ -53,12 +54,13 @@ public class SaveProcessMainOAIPMHCat {
 	 * Constructor por defecto
 	 * @param cL 
 	 * @param pathFile 
+	 * @param controlado 
 	 * @param Coleccion coleccion a insertar en oda.
 	 */
-	public SaveProcessMainOAIPMHCat(CompleteCollection coleccion, CompleteLogAndUpdates cL, String pathFile){
+	public SaveProcessMainOAIPMHCat(CompleteCollection coleccion, CompleteLogAndUpdates cL, String pathFile, boolean controlado){
 		toOda=coleccion;
 		ColectionLog=cL;
-		
+		Controlado=controlado;
 		
 		Sinonimos=new OAIPMHCatXMLSynonim();
 		
@@ -215,17 +217,33 @@ public class SaveProcessMainOAIPMHCat {
 						if (!stringori2.trim().isEmpty())
 						{
 						
-						String string2 = Sinonimos.getLanguage().get(stringori2.trim().toLowerCase());
-						if (string2!=null)
-						{
+							String string2=stringori2;
+							if (ListaDC.contains("language"))
+							{
+								string2 = Sinonimos.getLanguage().get(stringori2.trim().toLowerCase());
+								if (string2==null)
+									if (Controlado)
+										{
+										string2 = Sinonimos.getLanguage().get("otros");
+										if (string2==null)
+										{
+											ColectionLog.getLogLines().add("Language ->"+stringori2+" Unknown and is controled");	
+											string2="";
+										}
+										string2="";
+										}
+									else
+										string2=stringori2;
+							}
+							
+						
+							if (!string2.trim().isEmpty())
+							{
 						if (SBlanguage.length()>0)
 							SBlanguage.append(separator);	
 						
 						SBlanguage.append(string2);
-						}
-						else 
-							
-							ColectionLog.getLogLines().add("Language ->"+stringori2+" desconocido");	
+							}	
 						}
 					}
 					
@@ -243,11 +261,64 @@ public class SaveProcessMainOAIPMHCat {
 					break;
 				case "dc:format":
 					
-					String[] SS3=Valor.split("[,|;|:|.| |/]");
-					for (String string2 : SS3) {
+					String[] SS3=Valor.split("[,|;|:|.|/]");
+					for (String stringori2 : SS3) {
+						
+						String string2=stringori2;
+						if (ListaDC.contains("publication-type"))
+						{
+							string2 = Sinonimos.getPublication().get(stringori2.trim().toLowerCase());
+							if (string2==null)
+								if (Controlado)
+									{
+									string2 = Sinonimos.getPublication().get("otros");
+									if (string2==null)
+									{
+										ColectionLog.getLogLines().add("Format ->"+stringori2+" Unknown and is controled");	
+										string2="";
+									}
+									}
+								else
+									string2=stringori2;
+						}
+						
+						if (ListaDC.contains("procedural-modality"))
+						{
+							string2 = Sinonimos.getProcedural().get(stringori2.trim().toLowerCase());
+							if (string2==null)
+								if (Controlado)
+									{
+									string2 = Sinonimos.getProcedural().get("otros");
+									if (string2==null)
+									{
+										ColectionLog.getLogLines().add("Format ->"+stringori2+" Unknown and is controled");	
+										string2="";
+									}
+									}
+								else
+									string2=stringori2;
+						}
+						
+						if (ListaDC.contains("mechanism"))
+						{
+							string2 = Sinonimos.getMechanism().get(stringori2.trim().toLowerCase());
+							if (string2==null)
+								if (Controlado)
+									{
+									string2 = Sinonimos.getMechanism().get("otros");
+									if (string2==null)
+									{
+										ColectionLog.getLogLines().add("Format ->"+stringori2+" Unknown and is controled");	
+										string2="";
+									}
+									}
+								else
+									string2=stringori2;
+						}
+						
+						
 						if (!string2.trim().isEmpty())
 						{
-						
 					if (SBformat.length()>0)
 						SBformat.append(separator);
 					SBformat.append(string2);
@@ -257,7 +328,7 @@ public class SaveProcessMainOAIPMHCat {
 					break;
 				case "dc:type":
 					
-					String[] SS2=Valor.split("[,|;|:|.| |/]");
+					String[] SS2=Valor.split("[,|;|:|.|/]");
 					for (String string2 : SS2) {
 					
 						if (!string2.trim().isEmpty())
@@ -346,7 +417,7 @@ public class SaveProcessMainOAIPMHCat {
 					SBmodsname.append(setValue(Valor,Enstring.getValue()));
 					break;
 				case "<typeofresource>":
-					String[] SStr=Valor.split("[,|;|:|.| |/]");
+					String[] SStr=Valor.split("[,|;|:|.|/]");
 					for (String string2 : SStr) {
 						if (!string2.trim().isEmpty())
 						{
@@ -358,8 +429,30 @@ public class SaveProcessMainOAIPMHCat {
 					}
 					break;
 				case "<genre>":
-					String[] SSgen=Valor.split("[,|;|:|.| ]");
-					for (String string2 : SSgen) {
+					String[] SSgen=Valor.split("[,|;|:|.]");
+					for (String stringori2 : SSgen) {
+						
+						String string2=stringori2;
+						if (ListaMODSVALUES.containsKey("procedural-modality"))
+						{
+							string2 = Sinonimos.getProcedural().get(stringori2.trim().toLowerCase());
+							if (string2==null)
+								if (Controlado)
+									{
+									string2 = Sinonimos.getProcedural().get("otros");
+									if (string2==null)
+									{
+										ColectionLog.getLogLines().add("genre ->"+stringori2+" Unknown and is controled");	
+										string2="";
+									}
+									}
+							
+								else
+									string2=stringori2;
+						}
+
+						
+						
 						if (!string2.trim().isEmpty())
 						{
 						
@@ -367,6 +460,7 @@ public class SaveProcessMainOAIPMHCat {
 						SBmodsgenre.append(separator);
 					SBmodsgenre.append(setValue(string2,Enstring.getValue()));
 						}
+
 					}
 					break;
 				case "<origininfo>":
@@ -393,17 +487,34 @@ public class SaveProcessMainOAIPMHCat {
 					for (String stringori2 : SSlang) {
 						if (!stringori2.trim().isEmpty())
 						{
-						String string2 = Sinonimos.getLanguage().get(stringori2.trim().toLowerCase());
-						if (string2!=null)
-						{
+
+							String string2=stringori2;
+							if (ListaMODSVALUES.containsKey("language"))
+							{
+								string2 = Sinonimos.getLanguage().get(stringori2.trim().toLowerCase());
+								if (string2==null)
+									if (Controlado)
+										{
+										string2 = Sinonimos.getLanguage().get("otros");
+										if (string2==null)
+										{
+											ColectionLog.getLogLines().add("Language ->"+stringori2+" Unknown and is controled");	
+											string2="";
+										}
+										}
+								
+									else
+										string2=stringori2;
+							}
+
 						
+							if (!string2.trim().isEmpty())
+							{
 					if (SBmodslanguage.length()>0)
 						SBmodslanguage.append(separator);
 					SBmodslanguage.append(setValue(string2,Enstring.getValue()));
-						}
-						else 
+							}
 						
-							ColectionLog.getLogLines().add("Language ->"+stringori2+" desconocido");	
 						}
 							
 					}
@@ -417,7 +528,57 @@ public class SaveProcessMainOAIPMHCat {
 				case "<physicaldescription><note>":
 					if (SBmodsphysicaldescription.length()>0)
 						SBmodsphysicaldescription.append(separator);
-					SBmodsphysicaldescription.append(setValue(Valor,Enstring.getValue()));
+					
+					
+					
+					
+					String string2=Valor;
+					if (ListaMODSVALUES.containsKey("mechanism"))
+					{
+						string2 = Sinonimos.getMechanism().get(Valor.trim().toLowerCase());
+						if (string2==null)
+							if (Controlado)
+								{
+								string2 = Sinonimos.getMechanism().get("otros");
+								if (string2==null)
+								{
+									ColectionLog.getLogLines().add("Mechanism ->"+Valor+" Unknown and is controled");	
+									string2="";
+								}
+								}
+						
+							else
+								string2=Valor;
+					}
+					
+					if (ListaMODSVALUES.containsKey("publication-type"))
+					{
+						string2 = Sinonimos.getPublication().get(Valor.trim().toLowerCase());
+						if (string2==null)
+							if (Controlado)
+								{
+								string2 = Sinonimos.getPublication().get("otros");
+								if (string2==null)
+								{
+									ColectionLog.getLogLines().add("Mechanism ->"+Valor+" Unknown and is controled");	
+									string2="";
+								}
+								}
+						
+							else
+								string2=Valor;
+					}
+
+				
+					if (!string2.trim().isEmpty())
+					{
+			if (SBmodslanguage.length()>0)
+				SBmodslanguage.append(separator);
+			SBmodsphysicaldescription.append(setValue(string2,Enstring.getValue()));
+					}
+					
+					
+//					SBmodsphysicaldescription.append(setValue(Valor,Enstring.getValue()));
 					break;
 				case "<abstract>":
 					if (SBmodsabstract.length()>0)
@@ -456,13 +617,13 @@ public class SaveProcessMainOAIPMHCat {
 					break;
 				case "<classification>":
 					String[] SSclas=Valor.split("[,|;|:|.| |/]");
-					for (String string2 : SSclas) {
-						if (!string2.trim().isEmpty())
+					for (String stringclass : SSclas) {
+						if (!stringclass.trim().isEmpty())
 						{
 						
 					if (SBmodsclassification.length()>0)
 						SBmodsclassification.append(separator);
-					SBmodsclassification.append(setValue(string2,Enstring.getValue()));
+					SBmodsclassification.append(setValue(stringclass,Enstring.getValue()));
 						}
 					}
 					break;

@@ -72,4 +72,345 @@
 		<original>catalán</original>
 		<synonim>ca</synonim>
 	</language>
+	<publication>
+		<original>aplicación</original>
+		<synonim>Application</synonim>
+	</publication>
+	<publication>
+		<original>aplicacion</original>
+		<synonim>Application</synonim>
+	</publication>
+	<publication>
+		<original>programa informático</original>
+		<synonim>Computer Program</synonim>
+	</publication>
+	<publication>
+		<original>aplicacion- programa informático</original>
+		<synonim>Application - Computer Program</synonim>
+	</publication>
+	<publication>
+		<original>aplicacion - programa informático</original>
+		<synonim>Application - Computer Program</synonim>
+	</publication>
+	<publication>
+		<original>aplicacion-programa informático</original>
+		<synonim>Application - Computer Program</synonim>
+	</publication>
+	<publication>
+		<original>aplicacion -programa informático</original>
+		<synonim>Application - Computer Program</synonim>
+	</publication>
+	<publication>
+		<original>programa informatico</original>
+		<synonim>Computer Program</synonim>
+	</publication>
+	<publication>
+		<original>cinta de audio</original>
+		<synonim>Audio Tape</synonim>
+	</publication>
+	<publication>
+		<original>cd- rom</original>
+		<synonim>CD-ROM</synonim>
+	</publication>
+	<publication>
+		<original>cd-rom</original>
+		<synonim>CD-ROM</synonim>
+	</publication>
+	<publication>
+		<original>dvd-rom</original>
+		<synonim>DVD-ROM</synonim>
+	</publication>
+	<publication>
+		<original>dvd- rom</original>
+		<synonim>DVD-ROM</synonim>
+	</publication>
+	<publication>
+		<original>archivo</original>
+		<synonim>File</synonim>
+	</publication>
+	<publication>
+		<original>película</original>
+		<synonim>Film</synonim>
+	</publication>
+	<publication>
+		<original>disquete</original>
+		<synonim>Floppy Disk</synonim>
+	</publication>
+	<publication>
+		<original>instalación</original>
+		<synonim>Installation</synonim>
+	</publication>
+	<publication>
+		<original>instalación específica para un sitio</original>
+		<synonim>Site-Specific Installation</synonim>
+	</publication>
+	<publication>
+		<original>instalación locativa</original>
+		<synonim>Locative Installation</synonim>
+	</publication>
+	<publication>
+		<original>instalación local</original>
+		<synonim>Locative Installation</synonim>
+	</publication>
+	<publication>
+		<original>instalación permanente</original>
+		<synonim>Permanent Installation</synonim>
+	</publication>
+	<publication>
+		<original>online gallery</original>
+		<synonim>Galería en línea</synonim>
+	</publication>
+	<publication>
+		<original>performance</original>
+		<synonim>Performance</synonim>
+	</publication>
+	<publication>
+		<original>Performance única</original>
+		<synonim>Single Performance</synonim>
+	</publication>
+	<publication>
+		<original>rerformance repetible</original>
+		<synonim>Repeatable Performance</synonim>
+	</publication>
+	<publication>
+		<original>performance locativa</original>
+		<synonim>Locative Performance</synonim>
+	</publication>
+	<publication>
+		<original>performance específica para un sitio</original>
+		<synonim>Site-Specific Performance</synonim>
+	</publication>
+	<publication>
+		<original>plataforma</original>
+		<synonim>Platform</synonim>
+	</publication>
+	<publication>
+		<original>impresión fotográfica</original>
+		<synonim>Photographic Print</synonim>
+	</publication>
+	<publication>
+		<original>impresión</original>
+		<synonim>Print</synonim>
+	</publication>
+	<publication>
+		<original>red social</original>
+		<synonim>Social Network</synonim>
+	</publication>
+	<publication>
+		<original>dispositivo usb</original>
+		<synonim>USB Drive</synonim>
+	</publication>
+	<publication>
+		<original>vhs</original>
+		<synonim>VHS</synonim>
+	</publication>
+	<publication>
+		<original>grabación en vinilo</original>
+		<synonim>Vinyl Record</synonim>
+	</publication>
+	<publication>
+		<original>mundo virtual</original>
+		<synonim>Virtual World</synonim>
+	</publication>
+	<publication>
+		<original>Página Web</original>
+		<synonim>Website</synonim>
+	</publication>
+	<publication>
+		<original>otros</original>
+		<synonim>Other</synonim>
+	</publication>
+	<procedural>
+		<original>activación/desactivación</original>
+		<synonim>Activation - Deactivation</synonim>
+	</procedural>
+	<procedural>
+		<original>activación- desactivación</original>
+		<synonim>Activation - Deactivation</synonim>
+	</procedural>
+	<procedural>
+		<original>activación-desactivación</original>
+		<synonim>Activation - Deactivation</synonim>
+	</procedural>
+	<procedural>
+		<original>activación - desactivación</original>
+		<synonim>Activation - Deactivation</synonim>
+	</procedural>
+	<procedural>
+		<original>activación -desactivación</original>
+		<synonim>Activation - Deactivation</synonim>
+	</procedural>
+	<procedural>
+		<original>alteración</original>
+		<synonim>Alteration</synonim>
+	</procedural>
+	<procedural>
+		<original>detección</original>
+		<synonim>Detection</synonim>
+	</procedural>
+	<procedural>
+		<original>descarga</original>
+		<synonim>Download</synonim>
+	</procedural>
+	<procedural>
+		<original>generación</original>
+		<synonim>Generation</synonim>
+	</procedural>
+	<procedural>
+		<original>insercción</original>
+		<synonim>Insertion</synonim>
+	</procedural>
+	<procedural>
+		<original>inserción</original>
+		<synonim>Insertion</synonim>
+	</procedural>
+	<procedural>
+		<original>acceso de usuario</original>
+		<synonim>Login</synonim>
+	</procedural>
+	<procedural>
+		<original>manipulación</original>
+		<synonim>Manipulation</synonim>
+	</procedural>
+	<procedural>
+		<original>navegación</original>
+		<synonim>Navigation</synonim>
+	</procedural>
+	<procedural>
+		<original>navegación hipertextual</original>
+		<synonim>HyperTextual Navigation</synonim>
+	</procedural>
+	<procedural>
+		<original>navegación gráfica</original>
+		<synonim>Graphical Navigation</synonim>
+	</procedural>
+	<procedural>
+		<original>navegación espacial</original>
+		<synonim>Spatial Navigation</synonim>
+	</procedural>
+	<procedural>
+		<original>navegación temporal</original>
+		<synonim>Temporal Navigation</synonim>
+	</procedural>
+	<procedural>
+		<original>navegación controlada o programada</original>
+		<synonim>Scheduled Navigation</synonim>
+	</procedural>
+	<procedural>
+		<original>interactividad en Red</original>
+		<synonim>Networked Interactivity</synonim>
+	</procedural>
+	<procedural>
+		<original>observación</original>
+		<synonim>Observation</synonim>
+	</procedural>
+	<procedural>
+		<original>selección</original>
+		<synonim>Selection</synonim>
+	</procedural>
+	<procedural>
+		<original>transcodificación</original>
+		<synonim>Transcoding</synonim>
+	</procedural>
+	<procedural>
+		<original>cargar archivos</original>
+		<synonim>Upload</synonim>
+	</procedural>
+	<procedural>
+		<original>otros</original>
+		<synonim>Other</synonim>
+	</procedural>
+	<mechanism>
+		<original>otros</original>
+		<synonim>Other</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Aparato de biomonitorización</original>
+		<synonim>Biomonitoring Device</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Cámara</original>
+		<synonim>Camera</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Controlador</original>
+		<synonim>Controller</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Identificador del dispositivo</original>
+		<synonim>Device ID</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Monitor</original>
+		<synonim>Display</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Teclado</original>
+		<synonim>Keyboard</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Micrófono</original>
+		<synonim>Microphone</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Contolador midi</original>
+		<synonim>Midi Controller</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Sensor de movimiento</original>
+		<synonim>Motion Capture</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Impresión</original>
+		<synonim>Printout</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Radio</original>
+		<synonim>Radio</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Pantalla</original>
+		<synonim>Screen</synonim>
+	</mechanism>
+	<mechanism>
+		<original>smartphone/ teléfono inteligente</original>
+		<synonim>Smartphone</synonim>
+	</mechanism>
+	<mechanism>
+		<original>smartphone/teléfono inteligente</original>
+		<synonim>Smartphone</synonim>
+	</mechanism>
+	<mechanism>
+		<original>smartphone</original>
+		<synonim>Smartphone</synonim>
+	</mechanism>
+	<mechanism>
+		<original>teléfono inteligente</original>
+		<synonim>Smartphone</synonim>
+	</mechanism>
+	<mechanism>
+		<original>smartphone / teléfono inteligente</original>
+		<synonim>Smartphone</synonim>
+	</mechanism>
+	<mechanism>
+		<original>smartphone /teléfono inteligente</original>
+		<synonim>Smartphone</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Altavoces</original>
+		<synonim>Speaker</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Tableta</original>
+		<synonim>Tablet</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Pantalla táctil</original>
+		<synonim>Touchscreen</synonim>
+	</mechanism>
+	<mechanism>
+		<original>Vibración</original>
+		<synonim>Vibration</synonim>
+	</mechanism>
+
 </Clavy>

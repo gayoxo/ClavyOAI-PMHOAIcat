@@ -27,6 +27,7 @@ public class OAIPMHCatSaveCollection extends SaveCollection {
 	private String FileIO;
 	private String SOURCE_FOLDER = ""; // SourceFolder path
 	private String PathFile;
+	private boolean Controlado=false;
 	
 	/**
 	 * Constructor por defecto
@@ -50,7 +51,7 @@ public class OAIPMHCatSaveCollection extends SaveCollection {
 			
 			SaveProcessMainOAIPMHCat.resetTablas();
 			
-			SaveProcessMainOAIPMHCat oda = new SaveProcessMainOAIPMHCat(Salvar,CL,PathFile);
+			SaveProcessMainOAIPMHCat oda = new SaveProcessMainOAIPMHCat(Salvar,CL,PathFile,Controlado);
 			oda.preocess();
 			
 			
@@ -95,6 +96,7 @@ public class OAIPMHCatSaveCollection extends SaveCollection {
 			ListaCampos.add(new ImportExportPair(ImportExportDataEnum.Text, "MySQL User"));
 			ListaCampos.add(new ImportExportPair(ImportExportDataEnum.EncriptedText, "MySQL Password"));
 			ListaCampos.add(new ImportExportPair(ImportExportDataEnum.Boolean, "Create if not exist (Create a new database and generate structure by zero)"));
+			ListaCampos.add(new ImportExportPair(ImportExportDataEnum.Boolean, "Controlado Only Synonyms?"));
 			ListaCampos.add(new ImportExportPair(ImportExportDataEnum.File, "Archivo de sinonimos",true));
 			Parametros=ListaCampos;
 			return ListaCampos;
@@ -123,8 +125,11 @@ public class OAIPMHCatSaveCollection extends SaveCollection {
 
 			}
 			
-			if (DateEntrada.size()>5)
-				PathFile=DateEntrada.get(6);
+			Controlado=Boolean.parseBoolean(DateEntrada.get(6));
+			
+			
+			if (DateEntrada.size()>6)
+				PathFile=DateEntrada.get(7);
 			else 
 				PathFile="";
 			
