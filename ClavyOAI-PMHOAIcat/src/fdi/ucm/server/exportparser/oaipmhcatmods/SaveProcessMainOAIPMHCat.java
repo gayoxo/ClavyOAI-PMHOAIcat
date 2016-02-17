@@ -173,6 +173,9 @@ public class SaveProcessMainOAIPMHCat {
 		
 		SBdescription.append(separatorClean(documentInspect.getDescriptionText()));
 		SBmodsabstract.append(setValue(separatorClean(documentInspect.getDescriptionText()),"<abstract>"));
+		SBmodsrecordinfo.append("<recordinfo><recordContentSource authorityURI=\"http://cellproject.net/authorities/source-database\">Ciberia</recordContentSource></recordinfo>");
+		
+		
 		
 		LocalIdentificador=Long.toString(documentInspect.getClavilenoid());
 		
@@ -316,6 +319,22 @@ public class SaveProcessMainOAIPMHCat {
 									string2=stringori2;
 						}
 						
+						if (ListaDC.contains("formats"))
+						{
+							string2 = Sinonimos.getFormatos().get(stringori2.trim().toLowerCase());
+							if (string2==null)
+								if (Controlado)
+									{
+									string2 = Sinonimos.getFormatos().get("otros");
+									if (string2==null)
+									{
+										ColectionLog.getLogLines().add("Format ->"+stringori2+" Unknown and is controled");	
+										string2="";
+									}
+									}
+								else
+									string2=stringori2;
+						}
 						
 						if (!string2.trim().isEmpty())
 						{
@@ -568,6 +587,24 @@ public class SaveProcessMainOAIPMHCat {
 							else
 								string2=Valor;
 					}
+					
+					if (ListaMODSVALUES.containsKey("format"))
+					{
+						string2 = Sinonimos.getFormatos().get(Valor.trim().toLowerCase());
+						if (string2==null)
+							if (Controlado)
+								{
+								string2 = Sinonimos.getFormatos().get("otros");
+								if (string2==null)
+								{
+									ColectionLog.getLogLines().add("Mechanism ->"+Valor+" Unknown and is controled");	
+									string2="";
+								}
+								}
+						
+							else
+								string2=Valor;
+					}
 
 				
 					if (!string2.trim().isEmpty())
@@ -803,7 +840,7 @@ public class SaveProcessMainOAIPMHCat {
 			modsextension="'"+SBmodsextension.toString()+"'";
 		
 		
-		SBmodsrecordinfo.append("<recordinfo><recordContentSource authorityURI=\"http://cellproject.net/authorities/source-database\">Ciberia</recordContentSource></recordinfo>");
+		
 		
 		if (!SBmodsrecordinfo.toString().trim().isEmpty())
 			modsrecordinfo="'"+SBmodsrecordinfo.toString()+"'";

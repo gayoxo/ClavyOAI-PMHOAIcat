@@ -25,6 +25,7 @@ public class OAIPMHCatXMLSynonim {
 	private HashMap<String, String> Publication;
 	private HashMap<String, String> Procedural; 
 	private HashMap<String, String> Mechanism;
+	private HashMap<String, String> Formatos;
 
 	
 	public OAIPMHCatXMLSynonim()
@@ -33,6 +34,7 @@ public class OAIPMHCatXMLSynonim {
 		Publication=new HashMap<String, String>();
 		Procedural=new HashMap<String, String>();
 		Mechanism=new HashMap<String, String>();
+		Formatos=new HashMap<String, String>();
 	}
 	
 	public void processXML(String pathFile,CompleteLogAndUpdates cL) {
@@ -175,6 +177,38 @@ public class OAIPMHCatXMLSynonim {
 
   	  }
 		   	
+		   	NodeList nodeLstFormatos = doc.getElementsByTagName("formatos");
+//		   	  System.out.println("Information of all languages");
+		   	  
+		   	for (int s = 0; s < nodeLstFormatos.getLength(); s++) {
+
+	    Node fstNode = nodeLstFormatos.item(s);
+	    
+	    if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+	  
+	    	
+	           Element fstElmnt = (Element) fstNode;
+	      NodeList originalNmElmntLst = fstElmnt.getElementsByTagName("original");
+	      Element originalnameNmElmnt = (Element) originalNmElmntLst.item(0);
+	      NodeList originalnameNmElement = originalnameNmElmnt.getChildNodes();
+//	      System.out.println("Jarname : "  + ((Node) originalnameNmElement.item(0)).getNodeValue());
+	      
+	      NodeList synonimNmElmntLst = fstElmnt.getElementsByTagName("synonim");
+	      Element synonimNmElmnt = (Element) synonimNmElmntLst.item(0);
+	      NodeList synonimNmElement = synonimNmElmnt.getChildNodes();
+//	      System.out.println("jarpath  : " + ((Node) synonimNmElement.item(0)).getNodeValue());
+	      
+	      String Origen=((Node) originalnameNmElement.item(0)).getNodeValue();
+	      String Synonimo=((Node) synonimNmElement.item(0)).getNodeValue();
+	      
+	    Formatos.put(Origen.trim(),Synonimo.trim() );
+//	      SavePair nuevo=new SavePair(((Node) jarnameNmElement.item(0)).getNodeValue(), ((Node) jarpathNmElement.item(0)).getNodeValue());
+//	      
+//	      ListaSer.add(nuevo);
+	    }
+
+	  }
+		   	
 		   	  
 		} catch (Exception e) {
 			cL.getLogLines().add("Error en carga de XML");
@@ -196,6 +230,10 @@ public class OAIPMHCatXMLSynonim {
 	
 	public HashMap<String, String> getMechanism() {
 		return Mechanism;
+	}
+	
+	public HashMap<String, String> getFormatos() {
+		return Formatos;
 	}
 
 }

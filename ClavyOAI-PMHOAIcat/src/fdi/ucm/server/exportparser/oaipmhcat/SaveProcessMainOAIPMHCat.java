@@ -261,6 +261,23 @@ public class SaveProcessMainOAIPMHCat {
 									string2=stringori2;
 						}
 						
+						if (ListaDC.contains("formats"))
+						{
+							string2 = Sinonimos.getFormatos().get(stringori2.trim().toLowerCase());
+							if (string2==null)
+								if (Controlado)
+									{
+									string2 = Sinonimos.getFormatos().get("otros");
+									if (string2==null)
+									{
+										ColectionLog.getLogLines().add("Format ->"+stringori2+" Unknown and is controled");	
+										string2="";
+									}
+									}
+								else
+									string2=stringori2;
+						}
+						
 						
 						if (!string2.trim().isEmpty())
 						{

@@ -397,20 +397,59 @@
 		<synonim>Smartphone</synonim>
 	</mechanism>
 	<mechanism>
-		<original>Altavoces</original>
+		<original>altavoces</original>
 		<synonim>Speaker</synonim>
 	</mechanism>
 	<mechanism>
-		<original>Tableta</original>
+		<original>tableta</original>
 		<synonim>Tablet</synonim>
 	</mechanism>
 	<mechanism>
-		<original>Pantalla táctil</original>
+		<original>pantalla táctil</original>
 		<synonim>Touchscreen</synonim>
 	</mechanism>
 	<mechanism>
-		<original>Vibración</original>
+		<original>vibración</original>
 		<synonim>Vibration</synonim>
 	</mechanism>
-
+	<format>
+		<original>otros</original>
+		<synonim>Other</synonim>
+	</format>
+	<format>
+		<original>ambiente virtual</original>
+		<synonim>Virtual Environment</synonim>
+	</format>
+	<format>
+		<original>videojuego</original>
+		<synonim>Video Game</synonim>
+	</format>
+	<format>
+		<original>video</original>
+		<synonim>Video</synonim>
+	</format>
+	<format>
+		<original>texto</original>
+		<synonim>Text</synonim>
+	</format>
+	<format>
+		<original>motor de búsqueda</original>
+		<synonim>Search Engine</synonim>
+	</format>
+	<format>
+		<original>artefacto físico</original>
+		<synonim>Physical Artefact</synonim>
+	</format>
+	<format>
+		<original>imagen</original>
+		<synonim>Image / Picture</synonim>
+	</format>
+	<format>
+		<original>base de datos</original>
+		<synonim>Database</synonim>
+	</format>
+	<format>
+		<original>audio</original>
+		<synonim>Audio</synonim>
+	</format>
 </Clavy>
