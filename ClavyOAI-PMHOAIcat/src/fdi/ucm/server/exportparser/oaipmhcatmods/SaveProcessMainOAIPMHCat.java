@@ -173,7 +173,7 @@ public class SaveProcessMainOAIPMHCat {
 		
 		SBdescription.append(separatorClean(documentInspect.getDescriptionText()));
 		SBmodsabstract.append(setValue(separatorClean(documentInspect.getDescriptionText()),"<abstract>"));
-		SBmodsrecordinfo.append("<recordinfo><recordContentSource authorityURI=\"http://cellproject.net/authorities/source-database\">Ciberia</recordContentSource></recordinfo>");
+		SBmodsrecordinfo.append("<recordInfo><recordContentSource authorityURI=\"http://cellproject.net/authorities/source-database\">Ciberia</recordContentSource></recordInfo>");
 		
 		
 		
